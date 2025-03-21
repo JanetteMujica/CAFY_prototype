@@ -32,6 +32,8 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 	const handleNext = () => {
 		if (currentPage < totalPages) {
 			setCurrentPage(currentPage + 1);
+			// Add this line to scroll to the top
+			document.querySelector('.cafy-conversation-content').scrollTop = 0;
 		} else {
 			// If we're on the last page and the user clicks Next/Save
 			// Call the onSavePriorities function passed from the parent
@@ -46,6 +48,8 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 	const handlePrevious = () => {
 		if (currentPage > 1) {
 			setCurrentPage(currentPage - 1);
+			// Add this line to scroll to the top
+			document.querySelector('.cafy-conversation-content').scrollTop = 0;
 		}
 	};
 
