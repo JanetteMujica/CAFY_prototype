@@ -1,0 +1,79 @@
+.app {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.app-container {
+	display: flex;
+	flex: 1;
+}
+
+.main-content {
+	flex: 1;
+	padding: var(--space-4);
+	background-color: var(--color-bg-main); /* Light blue background #eef9fb */
+	min-height: calc(100vh - 60px); /* Subtract header height */
+	outline: none; /* Remove outline when focused by tabindex */
+}
+
+/* Skip link for keyboard users */
+.skip-link {
+	background: var(--color-primary);
+	color: var(--color-text-light);
+	font-weight: 700;
+	padding: var(--space-3);
+	position: absolute;
+	left: -9999px;
+	top: 0;
+	z-index: 1000;
+	text-decoration: none;
+}
+
+.skip-link:focus {
+	left: 0;
+	outline: 3px solid var(--color-primary-light);
+}
+
+/* For mobile devices, make the sidebar and main content stack */
+@media (max-width: 768px) {
+	.app-container {
+		flex-direction: column;
+	}
+
+	.main-content {
+		padding: var(--space-3);
+	}
+}
+
+/* Focus styles for accessibility */
+:focus {
+	outline: 3px solid var(--color-primary-light);
+	outline-offset: 2px;
+}
+
+/* Remove focus outline for mouse users, keep for keyboard */
+:focus:not(:focus-visible) {
+	outline: none;
+}
+
+:focus-visible {
+	outline: 3px solid var(--color-primary-light);
+	outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+	.app-container {
+		display: block;
+	}
+
+	.main-content {
+		width: 100%;
+	}
+
+	/* Hide navigation when printing */
+	.sidebar {
+		display: none;
+	}
+}
