@@ -1,0 +1,415 @@
+.cafy-conversation-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.6);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	padding: 20px;
+}
+
+.cafy-conversation-modal {
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	width: 100%;
+	max-width: 600px; /* Slightly smaller */
+	max-height: 90vh;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.cafy-conversation-header {
+	background-color: #222;
+	color: white;
+	padding: 12px 16px; /* Further reduced */
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+}
+
+.cafy-message-container {
+	margin-bottom: 24px;
+}
+
+.cafy-message {
+	flex: 1;
+}
+
+.cafy-message-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 6px; /* Further reduced */
+}
+
+.cafy-dark-box {
+	background-color: #222;
+	color: white;
+	padding: 12px; /* Further reduced */
+	border-radius: 10px;
+	position: relative;
+	border-top-left-radius: 2px;
+	margin-bottom: 8px; /* Further reduced */
+}
+
+.cafy-dark-box::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -8px; /* Reduced from -12px */
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 8px 8px 0; /* Reduced from 12px */
+	border-color: transparent #222 transparent transparent;
+}
+
+.cafy-conv-logo {
+	width: 24px; /* Further reduced */
+	height: auto;
+	margin-right: 8px; /* Further reduced */
+	flex-shrink: 0;
+}
+
+.cafy-spacer {
+	width: 80px;
+}
+
+.cafy-dark-box .cafy-page-title,
+.cafy-dark-box p,
+.cafy-dark-box li {
+	color: white;
+}
+
+.cafy-controls {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+/* Keep the buttons large enough for accessibility */
+.cafy-back-button {
+	display: flex;
+	align-items: center;
+	background: none;
+	border: none;
+	color: white;
+	font-size: 15px; /* Slightly reduced */
+	cursor: pointer;
+	padding: 6px 10px; /* Slightly reduced */
+	border-radius: 4px;
+	transition: background-color 0.2s;
+	min-height: 36px; /* Ensure minimum height for touch targets */
+}
+
+.cafy-back-button:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.cafy-back-button svg {
+	margin-right: 8px;
+	font-size: 18px;
+}
+
+.cafy-close-button {
+	background: none;
+	border: none;
+	color: white;
+	font-size: 24px;
+	cursor: pointer;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	transition: background-color 0.2s;
+}
+
+.cafy-close-button:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.cafy-progress-container {
+	height: 6px; /* Reduced from 8px */
+	background-color: #e5e5e5;
+	width: 100%;
+}
+
+.cafy-progress-bar {
+	height: 100%;
+	background-color: var(--color-primary, #f26230);
+	transition: width 0.3s ease;
+}
+
+.cafy-conversation-content {
+	padding: 16px;
+	overflow-y: auto;
+	flex: 1;
+}
+
+.cafy-page {
+	max-width: 100%;
+}
+
+/* Further optimize for less scrolling */
+.cafy-page-title {
+	font-size: 18px; /* Further reduced */
+	font-weight: 600;
+	margin-bottom: 8px; /* Further reduced */
+	color: #222;
+	line-height: 1.2; /* Tighter line spacing */
+}
+
+.cafy-page p {
+	font-size: 15px; /* Further reduced */
+	margin-bottom: 12px; /* Further reduced */
+	line-height: 1.3; /* Tighter line spacing */
+}
+
+.cafy-options {
+	display: flex;
+	flex-direction: column;
+	gap: 6px; /* Further reduced */
+	margin-bottom: 12px; /* Further reduced */
+}
+
+.cafy-option {
+	display: flex;
+	align-items: center;
+	padding: 8px 10px; /* Further reduced */
+	border: 1px solid #e5e5e5; /* Thinner border */
+	border-radius: 6px;
+	cursor: default;
+	transition: all 0.2s ease;
+	position: relative;
+	min-height: 36px; /* Ensure minimum height for touch targets */
+}
+
+.cafy-option:hover {
+	border-color: #ccc;
+}
+
+.cafy-option.selected {
+	border-color: #65cde3;
+	background-color: #65cde3;
+	color: black; /* Changed from white to black */
+}
+
+.cafy-option input[type='checkbox'],
+.cafy-option input[type='radio'] {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+
+.cafy-checkbox,
+.cafy-radio {
+	position: relative;
+	height: 18px; /* Further reduced */
+	width: 18px; /* Further reduced */
+	background-color: white;
+	border: 1px solid #999; /* Thinner border */
+	margin-right: 10px; /* Further reduced */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0; /* Prevent checkbox from shrinking */
+}
+
+.cafy-checkbox {
+	border-radius: 3px;
+}
+
+.cafy-radio {
+	border-radius: 50%;
+}
+
+/* Optimize checkmark for smaller size */
+.cafy-option.selected .cafy-checkbox::after {
+	content: '';
+	position: absolute;
+	display: block;
+	left: 5px;
+	top: 2px;
+	width: 4px;
+	height: 8px;
+	border: solid black;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+}
+
+.cafy-option.selected .cafy-radio::after {
+	content: '';
+	position: absolute;
+	display: block;
+	width: 8px;
+	height: 8px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 50%;
+	background-color: black;
+}
+
+.cafy-option-text {
+	font-size: 15px; /* Further reduced */
+	font-weight: 500;
+	line-height: 1.2; /* Tighter line spacing */
+}
+
+.cafy-option.selected .cafy-option-text {
+	color: black; /* Making sure the text stays black when selected */
+}
+
+.cafy-options-group {
+	margin-bottom: 16px; /* Further reduced */
+}
+
+.cafy-group-title {
+	font-size: 16px; /* Further reduced */
+	font-weight: 600;
+	margin-bottom: 8px; /* Further reduced */
+	color: #333;
+}
+
+.cafy-summary-list {
+	list-style-type: disc;
+	margin-left: 16px; /* Further reduced */
+	margin-bottom: 12px; /* Further reduced */
+}
+
+.cafy-summary-list li {
+	font-size: 15px; /* Further reduced */
+	margin-bottom: 4px; /* Further reduced */
+	line-height: 1.3; /* Tighter line spacing */
+}
+
+.cafy-dark-box .cafy-summary-list li {
+	color: white;
+}
+
+.cafy-conversation-footer {
+	padding: 12px 16px; /* Further reduced */
+	border-top: 1px solid #e5e5e5;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.cafy-conversation-modal .button {
+	min-height: 40px; /* Maintaining minimum height for accessibility */
+	padding: 8px 16px; /* Further reduced */
+	font-size: 15px; /* Further reduced */
+	border-radius: 6px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	font-weight: 600;
+	border: none;
+}
+
+.cafy-next-button {
+	min-width: 100px; /* Further reduced but keeping it accessible */
+}
+
+.cafy-conversation-modal .primary-button {
+	background-color: var(--color-primary, #f26230);
+	color: white;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cafy-conversation-modal .primary-button:hover {
+	background-color: #e05825;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cafy-conversation-modal .primary-button:focus {
+	outline: 3px solid rgba(242, 98, 48, 0.3);
+	outline-offset: 2px;
+}
+
+.cafy-conversation-modal .primary-button:active {
+	transform: translateY(0);
+	background-color: #d04d20;
+}
+
+/* Focus styles for better accessibility */
+.cafy-conversation-modal *:focus {
+	outline: 3px solid #65cde3;
+	outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+	.cafy-option.selected {
+		border: 2px solid currentColor;
+	}
+
+	.primary-button {
+		border: 2px solid currentColor;
+	}
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.cafy-conversation-content {
+		padding: 20px;
+	}
+
+	.cafy-page-title {
+		font-size: 22px;
+	}
+
+	.cafy-option {
+		padding: 14px;
+	}
+
+	.cafy-option-text {
+		font-size: 16px;
+	}
+
+	.cafy-conversation-footer {
+		padding: 16px 20px;
+	}
+
+	.cafy-conversation-modal .button {
+		width: 100%;
+	}
+
+	.cafy-dark-box::before {
+		display: none; /* Hide the speech bubble pointer on mobile */
+	}
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+	.cafy-controls {
+		gap: 6px;
+	}
+
+	.cafy-back-button span {
+		display: none;
+	}
+
+	.cafy-back-button svg {
+		margin-right: 0;
+	}
+
+	.cafy-message-header {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.cafy-conv-logo {
+		margin-bottom: 10px;
+	}
+}
