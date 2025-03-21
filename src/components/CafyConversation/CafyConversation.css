@@ -119,18 +119,13 @@
 }
 
 .cafy-close-button {
-	background: none;
-	border: none;
-	color: white;
-	font-size: 24px;
-	cursor: pointer;
-	width: 40px;
-	height: 40px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: 50%;
-	transition: background-color 0.2s;
+	background-color: #222;
+}
+
+.cafy-close-button svg {
+	color: white !important;
+	fill: white !important;
+	stroke: white !important;
 }
 
 .cafy-close-button:hover {

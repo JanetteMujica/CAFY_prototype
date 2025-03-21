@@ -61,7 +61,7 @@ git commit -m "Implement HomePage component and fix navigation"
 
 ```bash
 # Push your changes to the main branch
-git push origin main
+git push origin master
 ```
 
 ## Deploying to GitHub Pages
