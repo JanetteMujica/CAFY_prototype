@@ -3,7 +3,7 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
-	"homepage": "https://janettemujica.github.io/CAFY_prototype",
+	"homepage": "https://janettemujica.github.io/CAFY_prototype/",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
