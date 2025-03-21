@@ -1,0 +1,27 @@
+.home-page {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+/* Temporary styles until you create the actual component CSS files */
+.care-section,
+.journal-section {
+	background-color: white;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+	margin-bottom: 16px;
+	font-size: 24px;
+}
+
+@media (max-width: 768px) {
+	.home-page {
+		gap: 16px;
+	}
+}
