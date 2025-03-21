@@ -7,10 +7,12 @@ const Header = () => {
 		<header className='header' role='banner'>
 			<div className='logo'>
 				<Link to='/' className='logo-link' aria-label='eCarePD Home'>
-					<h1>eCarePD</h1>
+					<h1>
+						<span className='logo-primary'>eCare</span>
+						<span className='logo-secondary'>PD</span>
+					</h1>
 				</Link>
 			</div>
-			{/* The mobile navigation toggle button is in the Sidebar component */}
 		</header>
 	);
 };

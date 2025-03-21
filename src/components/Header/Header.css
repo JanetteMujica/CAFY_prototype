@@ -1,173 +1,48 @@
-/* Sidebar navigation styles with enhanced accessibility */
-.sidebar {
-	background-color: var(--color-bg-alt); /* White background */
-	width: 280px; /* Slightly wider for better readability */
-	padding: var(--space-4);
-	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-	height: calc(100vh - 60px); /* Full height minus header */
-	overflow-y: auto;
-	position: sticky;
-	top: 60px; /* Below header */
-	z-index: 90;
-	transition: transform 0.3s ease-in-out;
-}
-
-.nav-list {
-	list-style: none;
-	display: flex;
-	flex-direction: column;
-	gap: var(--space-3);
-}
-
-.nav-item {
-	margin-bottom: var(--space-2);
-	width: 100%;
-}
-
-.nav-link {
-	display: block;
+.header {
+	background-color: var(--color-bg-alt); /* White background as requested */
 	padding: var(--space-3);
-	text-decoration: none;
-	color: var(--color-text-dark);
-	border-radius: 8px;
-	border-left: 4px solid transparent;
-	transition: all 0.2s ease;
-	font-size: var(--font-size-19); /* Larger text for readability */
-	line-height: 1.5;
-	font-weight: 500;
-	position: relative;
-}
-
-.nav-link:hover {
-	background-color: var(--color-primary-bg);
-	color: var(--color-primary);
-}
-
-.nav-link:focus {
-	outline: none;
-	box-shadow: 0 0 0 3px var(--color-primary-light);
-}
-
-.nav-link.active {
-	background-color: var(--color-primary-bg);
-	color: var(--color-primary);
-	border-left-color: var(--color-primary);
-	font-weight: 600;
-}
-
-.nav-link[aria-disabled='true'] {
-	opacity: 0.6;
-	cursor: not-allowed;
-}
-
-/* Mobile navigation toggle button */
-.mobile-nav-toggle {
-	display: none;
-	position: fixed;
-	top: 12px;
-	right: var(--space-4);
-	z-index: 100;
-	background-color: var(--color-primary);
-	color: var(--color-text-light);
-	border: none;
-	border-radius: 8px;
-	padding: var(--space-2) var(--space-3);
-	cursor: pointer;
-	font-size: var(--font-size-16);
-	font-weight: 600;
+	display: flex;
+	justify-content: space-between;
 	align-items: center;
-	gap: var(--space-2);
-}
-
-.hamburger-icon {
-	width: 24px;
-	height: 24px;
-	position: relative;
-	display: inline-flex;
-	align-items: center;
-	margin-left: var(--space-2);
-}
-
-.bar,
-.bar::before,
-.bar::after {
-	display: block;
-	width: 24px;
-	height: 3px;
-	background-color: var(--color-text-light);
-	position: absolute;
-	border-radius: 3px;
-	transition: all 0.3s ease-in-out;
-}
-
-.bar::before,
-.bar::after {
-	content: '';
-}
-
-.bar::before {
-	transform: translateY(-8px);
-}
-
-.bar::after {
-	transform: translateY(8px);
-}
-
-.bar.open {
-	background-color: transparent;
-}
-
-.bar.open::before {
-	transform: rotate(45deg);
-}
-
-.bar.open::after {
-	transform: rotate(-45deg);
-}
-
-/* Overlay for mobile */
-.nav-overlay {
-	display: none;
-	position: fixed;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	height: 60px;
+	position: sticky;
 	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 80;
+	z-index: 100;
 }
 
-/* Mobile styles */
+.logo {
+	display: flex;
+	align-items: center;
+}
+
+.logo-link {
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+}
+
+.logo h1 {
+	font-weight: 900; /* EXTRA bold as requested */
+	font-size: var(--font-size-27);
+	letter-spacing: 1px;
+	margin: 0;
+}
+
+.logo-primary {
+	color: var(--color-bg-dark); /* Dark color for "eCare" */
+}
+
+.logo-secondary {
+	color: var(--color-blue-light); /* Blue color for "PD" */
+}
+
 @media (max-width: 768px) {
-	.sidebar {
-		position: fixed;
-		left: 0;
-		transform: translateX(-100%);
-		width: 280px;
-		z-index: 95;
-		height: 100vh;
-		top: 0;
-		padding-top: 80px; /* Space for header */
+	.header {
+		padding: var(--space-2);
 	}
 
-	.sidebar.open {
-		transform: translateX(0);
-	}
-
-	.mobile-nav-toggle {
-		display: flex;
-	}
-
-	.nav-overlay {
-		display: block;
-	}
-}
-
-/* High contrast mode support */
-@media (forced-colors: active) {
-	.nav-link.active {
-		border-left: 4px solid CanvasText;
-		background-color: Canvas;
-		color: CanvasText;
+	.logo h1 {
+		font-size: var(--font-size-24);
 	}
 }

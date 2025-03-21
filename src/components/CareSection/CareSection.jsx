@@ -1,5 +1,7 @@
 import React from 'react';
 import './CareSection.css';
+// Import the SVG directly if you're using a bundler like Vite that supports it
+import smileyRoboLogo from '../../assets/smileyRobo_color.svg';
 
 const CareSection = () => {
 	return (
@@ -9,7 +11,13 @@ const CareSection = () => {
 			</h2>
 			<div className='cafy-container'>
 				<div className='cafy-header'>
-					<h3 id='cafy-heading'>CAFY</h3>
+					<div className='cafy-logo-container' id='cafy-heading'>
+						<img
+							src={smileyRoboLogo}
+							alt='CAFY Robot Logo'
+							className='cafy-logo'
+						/>
+					</div>
 					<a
 						href='#update-priorities'
 						className='link'

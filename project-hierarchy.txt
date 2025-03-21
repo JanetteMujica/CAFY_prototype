@@ -1,0 +1,40 @@
+CAFY_prototype
+├─ .gitignore
+├─ dist
+│  ├─ assets
+│  │  ├─ index-CQwOHlHv.js
+│  │  ├─ index-D8b4DHJx.css
+│  │  └─ react-CHdo91hT.svg
+│  ├─ index.html
+│  └─ vite.svg
+├─ eslint.config.js
+├─ index.html
+├─ package-lock.json
+├─ package.json
+├─ public
+│  └─ vite.svg
+├─ README.md
+├─ src
+│  ├─ App.css
+│  ├─ App.jsx
+│  ├─ assets
+│  ├─ components
+│  │  ├─ CareSection
+│  │  │  ├─ CareSection.css
+│  │  │  └─ CareSection.jsx
+│  │  ├─ Header
+│  │  │  ├─ Header.css
+│  │  │  └─ Header.jsx
+│  │  ├─ JournalSection
+│  │  │  ├─ JournalSection.css
+│  │  │  └─ JournalSection.jsx
+│  │  └─ Sidebar
+│  │     ├─ Sidebar.css
+│  │     └─ Sidebar.jsx
+│  ├─ index.css
+│  ├─ main.jsx
+│  └─ pages
+│     └─ HomePage
+│        ├─ HomePage.css
+│        └─ HomePage.jsx
+└─ vite.config.js

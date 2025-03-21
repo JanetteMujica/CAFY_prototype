@@ -1,27 +1,35 @@
 .home-page {
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: var(--space-5);
 	max-width: 1200px;
 	margin: 0 auto;
 }
 
-/* Temporary styles until you create the actual component CSS files */
-.care-section,
-.journal-section {
-	background-color: white;
-	padding: 20px;
-	border-radius: 8px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Default column layout for mobile */
+.sections-container {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-5);
+	width: 100%;
 }
 
-h2 {
-	margin-bottom: 16px;
-	font-size: 24px;
+/* Switch to row layout on larger screens */
+@media (min-width: 992px) {
+	.sections-container {
+		flex-direction: row;
+		align-items: flex-start;
+	}
+
+	.sections-container > section {
+		flex: 1;
+		max-width: calc(50% - var(--space-3));
+		min-width: 300px;
+	}
 }
 
 @media (max-width: 768px) {
 	.home-page {
-		gap: 16px;
+		gap: var(--space-4);
 	}
 }
