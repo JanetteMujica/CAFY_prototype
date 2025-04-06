@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import './CareSection.css';
-// Import the PNG file
-import cafyLogo from '../../assets/CAFY_online.png';
-// Import the conversation component
+import cafyLogo from '../../assets/CAFY_Online.png';
 import CafyConversation from '../CafyConversation/CafyConversation';
 
 const CareSection = () => {
 	const [showConversation, setShowConversation] = useState(false);
-	const [prioritiesSet, setPrioritiesSet] = useState(false);
+	const [priorities, setPriorities] = useState([]);
 
 	const handleOpenConversation = () => {
 		setShowConversation(true);
@@ -17,9 +15,23 @@ const CareSection = () => {
 		setShowConversation(false);
 	};
 
-	const handleSavePriorities = () => {
-		setPrioritiesSet(true);
+	const handleSavePriorities = (selectedPriorities) => {
+		// Transform the selected priorities into the format needed for display
+		const formattedPriorities = selectedPriorities.map((priority) => ({
+			id: priority.id,
+			title: priority.item,
+			description: generateDescription(priority.item),
+			category: priority.category,
+		}));
+
+		setPriorities(formattedPriorities);
 		setShowConversation(false);
+	};
+
+	// Helper function to generate descriptions based on the priority title
+	const generateDescription = (title) => {
+		// Generate a personalized description based on the priority title
+		return `Your goal for the next few weeks will be to focus on ${title.toLowerCase()}. Track your ${title.toLowerCase()} so I can provide you with care tips and ressources.`;
 	};
 
 	return (
@@ -28,7 +40,7 @@ const CareSection = () => {
 				My Care Priorities
 			</h2>
 
-			{!prioritiesSet ? (
+			{priorities.length === 0 ? (
 				// Initial state - show CAFY intro and button
 				<div className='cafy-container'>
 					<div className='cafy-header'>
@@ -42,7 +54,7 @@ const CareSection = () => {
 								handleOpenConversation();
 							}}
 						>
-							Update my care priorities with CAFY
+							Select my care priorities with CAFY
 						</a>
 					</div>
 					<div
@@ -66,50 +78,34 @@ const CareSection = () => {
 					</div>
 				</div>
 			) : (
-				// After priorities are set - show the three priority cards
-				<div className='priorities-container'>
-					{/* Pain Card */}
-					<div className='priority-card'>
-						<h3 className='priority-title'>Pain</h3>
-						<p className='priority-description'>
-							Your goal for next few weeks will be to find ways to manage pain
-							and stay as comfortable as possible. I will suggest simple
-							techniques to help you. Complete this short survey so I can better
-							guide you.
-						</p>
-						<button className='button primary-button priority-button'>
-							See tips now
-						</button>
+				// After priorities are set - show the priority cards
+				<>
+					<div className='cafy-header'>
+						<img src={cafyLogo} alt='CAFY Robot Logo' className='cafy-logo' />
+						<a
+							href='#'
+							className='link'
+							aria-describedby='cafy-heading'
+							onClick={(e) => {
+								e.preventDefault();
+								handleOpenConversation();
+							}}
+						>
+							Update my care priorities with CAFY
+						</a>
 					</div>
-
-					{/* Fatigue Card */}
-					<div className='priority-card'>
-						<h3 className='priority-title'>Fatigue</h3>
-						<p className='priority-description'>
-							Your goal for next few weeks will be to improve your energy levels
-							by making small adjustments to your daily routine. I will provide
-							personalized advice to help you feel less tired. Answer a few
-							quick questions so I can guide you better.
-						</p>
-						<button className='button primary-button priority-button'>
-							See tips now
-						</button>
+					<div className='priorities-container'>
+						{priorities.map((priority) => (
+							<div className='priority-card' key={priority.id}>
+								<h3 className='priority-title'>{priority.title}</h3>
+								<p className='priority-description'>{priority.description}</p>
+								<button className='button primary-button priority-button'>
+									Track your {priority.title.toLowerCase()}
+								</button>
+							</div>
+						))}
 					</div>
-
-					{/* Exercise Card */}
-					<div className='priority-card'>
-						<h3 className='priority-title'>Exercise</h3>
-						<p className='priority-description'>
-							Your goal for next few weeks will be to stay active by trying
-							different ways to move that feel right for you. I will share
-							simple exercises and movement tips to help you. Answer a few
-							questions so I can personalize my advice.
-						</p>
-						<button className='button primary-button priority-button'>
-							See tips now
-						</button>
-					</div>
-				</div>
+				</>
 			)}
 
 			{/* Render the conversation component when showConversation is true */}

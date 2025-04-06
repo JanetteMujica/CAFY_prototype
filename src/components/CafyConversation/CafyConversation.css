@@ -4,21 +4,20 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: rgba(0, 0, 0, 0.8);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	z-index: 1000;
-	padding: 20px;
+	padding: 0; /* Remove padding to make it full screen */
 }
 
 .cafy-conversation-modal {
 	background-color: white;
-	border-radius: 10px;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 	width: 100%;
-	max-width: 600px; /* Slightly smaller */
-	max-height: 90vh;
+	height: 100%; /* Make it full height */
+	max-width: 100%; /* Make it full width */
+	max-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
@@ -27,7 +26,7 @@
 .cafy-conversation-header {
 	background-color: #222;
 	color: white;
-	padding: 12px 16px; /* Further reduced */
+	padding: 16px 20px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -35,7 +34,7 @@
 }
 
 .cafy-message-container {
-	margin-bottom: 24px;
+	margin-bottom: 30px;
 }
 
 .cafy-message {
@@ -45,40 +44,40 @@
 .cafy-message-header {
 	display: flex;
 	align-items: center;
-	margin-bottom: 6px; /* Further reduced */
+	margin-bottom: 10px;
 }
 
 .cafy-dark-box {
 	background-color: #222;
 	color: white;
-	padding: 12px; /* Further reduced */
+	padding: 20px;
 	border-radius: 10px;
 	position: relative;
 	border-top-left-radius: 2px;
-	margin-bottom: 8px; /* Further reduced */
+	margin-bottom: 15px;
 }
 
 .cafy-dark-box::before {
 	content: '';
 	position: absolute;
 	top: 0;
-	left: -8px; /* Reduced from -12px */
+	left: -10px;
 	width: 0;
 	height: 0;
 	border-style: solid;
-	border-width: 0 8px 8px 0; /* Reduced from 12px */
+	border-width: 0 10px 10px 0;
 	border-color: transparent #222 transparent transparent;
 }
 
 .cafy-conv-logo {
-	width: 24px; /* Further reduced */
+	width: 32px;
 	height: auto;
-	margin-right: 8px; /* Further reduced */
+	margin-right: 12px;
 	flex-shrink: 0;
 }
 
 .cafy-spacer {
-	width: 80px;
+	width: 90px;
 }
 
 .cafy-dark-box .cafy-page-title,
@@ -101,12 +100,12 @@
 	background: none;
 	border: none;
 	color: white;
-	font-size: 15px; /* Slightly reduced */
+	font-size: 18px;
 	cursor: pointer;
-	padding: 6px 10px; /* Slightly reduced */
+	padding: 8px 16px;
 	border-radius: 4px;
 	transition: background-color 0.2s;
-	min-height: 36px; /* Ensure minimum height for touch targets */
+	min-height: 48px; /* Larger for better touch targets */
 }
 
 .cafy-back-button:hover {
@@ -115,17 +114,20 @@
 
 .cafy-back-button svg {
 	margin-right: 8px;
-	font-size: 18px;
+	font-size: 24px;
 }
 
 .cafy-close-button {
-	background-color: #222;
-}
-
-.cafy-close-button svg {
-	color: white !important;
-	fill: white !important;
-	stroke: white !important;
+	background: none;
+	border: none;
+	padding: 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 48px;
+	min-width: 48px;
 }
 
 .cafy-close-button:hover {
@@ -133,7 +135,7 @@
 }
 
 .cafy-progress-container {
-	height: 6px; /* Reduced from 8px */
+	height: 8px;
 	background-color: #e5e5e5;
 	width: 100%;
 }
@@ -145,57 +147,60 @@
 }
 
 .cafy-conversation-content {
-	padding: 16px;
+	padding: 24px;
 	overflow-y: auto;
 	flex: 1;
+	font-size: 18px; /* Larger default font size for better readability */
 }
 
 .cafy-page {
-	max-width: 100%;
+	max-width: 800px;
+	margin: 0 auto;
 }
 
-/* Further optimize for less scrolling */
 .cafy-page-title {
-	font-size: 18px; /* Further reduced */
+	font-size: 24px;
 	font-weight: 600;
-	margin-bottom: 8px; /* Further reduced */
+	margin-bottom: 12px;
 	color: #222;
-	line-height: 1.2; /* Tighter line spacing */
+	line-height: 1.3;
 }
 
 .cafy-page p {
-	font-size: 15px; /* Further reduced */
-	margin-bottom: 12px; /* Further reduced */
-	line-height: 1.3; /* Tighter line spacing */
+	font-size: 18px;
+	margin-bottom: 16px;
+	line-height: 1.5;
 }
 
 .cafy-options {
 	display: flex;
 	flex-direction: column;
-	gap: 6px; /* Further reduced */
-	margin-bottom: 12px; /* Further reduced */
+	gap: 12px;
+	margin-bottom: 20px;
 }
 
 .cafy-option {
 	display: flex;
 	align-items: center;
-	padding: 8px 10px; /* Further reduced */
-	border: 1px solid #e5e5e5; /* Thinner border */
-	border-radius: 6px;
-	cursor: default;
+	padding: 16px 20px;
+	border: 2px solid #e5e5e5;
+	border-radius: 10px;
+	cursor: pointer;
 	transition: all 0.2s ease;
 	position: relative;
-	min-height: 36px; /* Ensure minimum height for touch targets */
+	min-height: 60px; /* Larger for easier interaction */
 }
 
 .cafy-option:hover {
 	border-color: #ccc;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .cafy-option.selected {
 	border-color: #65cde3;
 	background-color: #65cde3;
-	color: black; /* Changed from white to black */
+	color: black;
 }
 
 .cafy-option input[type='checkbox'],
@@ -210,36 +215,35 @@
 .cafy-checkbox,
 .cafy-radio {
 	position: relative;
-	height: 18px; /* Further reduced */
-	width: 18px; /* Further reduced */
+	height: 28px;
+	width: 28px;
 	background-color: white;
-	border: 1px solid #999; /* Thinner border */
-	margin-right: 10px; /* Further reduced */
+	border: 2px solid #999;
+	margin-right: 16px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	flex-shrink: 0; /* Prevent checkbox from shrinking */
+	flex-shrink: 0;
 }
 
 .cafy-checkbox {
-	border-radius: 3px;
+	border-radius: 5px;
 }
 
 .cafy-radio {
 	border-radius: 50%;
 }
 
-/* Optimize checkmark for smaller size */
 .cafy-option.selected .cafy-checkbox::after {
 	content: '';
 	position: absolute;
 	display: block;
-	left: 5px;
-	top: 2px;
-	width: 4px;
-	height: 8px;
+	left: 8px;
+	top: 3px;
+	width: 8px;
+	height: 16px;
 	border: solid black;
-	border-width: 0 2px 2px 0;
+	border-width: 0 3px 3px 0;
 	transform: rotate(45deg);
 }
 
@@ -247,8 +251,8 @@
 	content: '';
 	position: absolute;
 	display: block;
-	width: 8px;
-	height: 8px;
+	width: 16px;
+	height: 16px;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -257,54 +261,91 @@
 }
 
 .cafy-option-text {
-	font-size: 15px; /* Further reduced */
+	font-size: 18px;
 	font-weight: 500;
-	line-height: 1.2; /* Tighter line spacing */
+	line-height: 1.4;
 }
 
 .cafy-option.selected .cafy-option-text {
-	color: black; /* Making sure the text stays black when selected */
+	color: black;
 }
 
 .cafy-options-group {
-	margin-bottom: 16px; /* Further reduced */
+	margin-bottom: 24px;
 }
 
 .cafy-group-title {
-	font-size: 16px; /* Further reduced */
+	font-size: 20px;
 	font-weight: 600;
-	margin-bottom: 8px; /* Further reduced */
+	margin-bottom: 12px;
 	color: #333;
 }
 
 .cafy-summary-list {
-	list-style-type: disc;
-	margin-left: 16px; /* Further reduced */
-	margin-bottom: 12px; /* Further reduced */
+	list-style-type: none;
+	margin-left: 0;
+	margin-bottom: 16px;
 }
 
-.cafy-summary-list li {
-	font-size: 15px; /* Further reduced */
-	margin-bottom: 4px; /* Further reduced */
-	line-height: 1.3; /* Tighter line spacing */
+.cafy-summary-item {
+	font-size: 18px;
+	margin-bottom: 12px;
+	line-height: 1.4;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 8px 0;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.cafy-dark-box .cafy-summary-list li {
-	color: white;
+.cafy-summary-item:last-child {
+	border-bottom: none;
+}
+
+.cafy-remove-button {
+	background: none;
+	border: none;
+	color: #fff;
+	font-size: 18px;
+	cursor: pointer;
+	padding: 6px;
+	border-radius: 50%;
+	margin-left: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 40px;
+	min-width: 40px;
+	transition: background-color 0.2s;
+}
+
+.cafy-remove-button:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.cafy-confirmation-options {
+	margin-bottom: 20px;
+}
+
+.cafy-radio-group {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
 }
 
 .cafy-conversation-footer {
-	padding: 12px 16px; /* Further reduced */
+	padding: 20px 24px;
 	border-top: 1px solid #e5e5e5;
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
+	background-color: white;
 }
 
 .cafy-conversation-modal .button {
-	min-height: 40px; /* Maintaining minimum height for accessibility */
-	padding: 8px 16px; /* Further reduced */
-	font-size: 15px; /* Further reduced */
-	border-radius: 6px;
+	min-height: 56px;
+	padding: 12px 24px;
+	font-size: 18px;
+	border-radius: 10px;
 	cursor: pointer;
 	transition: all 0.2s ease;
 	font-weight: 600;
@@ -312,7 +353,22 @@
 }
 
 .cafy-next-button {
-	min-width: 100px; /* Further reduced but keeping it accessible */
+	min-width: 160px;
+}
+
+.cafy-add-more-button {
+	min-width: 240px;
+	background-color: #e5e5e5;
+	color: #222;
+	font-weight: 600;
+	border: 2px solid #ccc;
+	transition: all 0.2s ease;
+}
+
+.cafy-add-more-button:hover {
+	background-color: #d5d5d5;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .cafy-conversation-modal .primary-button {
@@ -337,6 +393,26 @@
 	background-color: #d04d20;
 }
 
+.cafy-conversation-modal .primary-button:disabled {
+	background-color: #ccc;
+	color: #666;
+	cursor: not-allowed;
+	transform: none;
+	box-shadow: none;
+}
+
+.cafy-conversation-modal .secondary-button {
+	background-color: #f0f0f0;
+	color: #333;
+	border: 2px solid #ddd;
+}
+
+.cafy-conversation-modal .secondary-button:hover {
+	background-color: #e0e0e0;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 /* Focus styles for better accessibility */
 .cafy-conversation-modal *:focus {
 	outline: 3px solid #65cde3;
@@ -346,18 +422,38 @@
 /* High contrast mode support */
 @media (forced-colors: active) {
 	.cafy-option.selected {
-		border: 2px solid currentColor;
+		border: 3px solid currentColor;
 	}
 
-	.primary-button {
+	.primary-button,
+	.secondary-button {
+		border: 3px solid currentColor;
+	}
+
+	.cafy-remove-button {
 		border: 2px solid currentColor;
+	}
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+	.cafy-option:hover,
+	.cafy-add-more-button:hover,
+	.cafy-conversation-modal .primary-button:hover,
+	.cafy-conversation-modal .secondary-button:hover {
+		transform: none;
+		transition: none;
+	}
+
+	.cafy-progress-bar {
+		transition: none;
 	}
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
 	.cafy-conversation-content {
-		padding: 20px;
+		padding: 16px;
 	}
 
 	.cafy-page-title {
@@ -369,15 +465,22 @@
 	}
 
 	.cafy-option-text {
-		font-size: 16px;
+		font-size: 17px;
 	}
 
 	.cafy-conversation-footer {
-		padding: 16px 20px;
+		padding: 16px;
+		flex-direction: column;
+		gap: 12px;
 	}
 
 	.cafy-conversation-modal .button {
 		width: 100%;
+	}
+
+	.cafy-next-button,
+	.cafy-add-more-button {
+		min-width: 100%;
 	}
 
 	.cafy-dark-box::before {
@@ -406,5 +509,29 @@
 
 	.cafy-conv-logo {
 		margin-bottom: 10px;
+	}
+
+	.cafy-page {
+		padding: 0;
+	}
+
+	.cafy-page p {
+		font-size: 16px;
+	}
+
+	.cafy-option {
+		padding: 12px;
+		min-height: 52px;
+	}
+
+	.cafy-checkbox,
+	.cafy-radio {
+		height: 24px;
+		width: 24px;
+		margin-right: 12px;
+	}
+
+	.cafy-option-text {
+		font-size: 16px;
 	}
 }

@@ -1,56 +1,367 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CafyConversation.css';
-import { IoClose } from 'react-icons/io5';
+import { IoClose, IoTrashOutline } from 'react-icons/io5';
 import { IoIosArrowBack } from 'react-icons/io';
-import cafyLogo from '../../assets/CAFY_online.png';
+import cafyLogo from '../../assets/CAFY_Online.png';
+import taxonomyData from '../../taxonomy.json';
 
-// Add onSavePriorities prop to handle saving from parent component
 const CafyConversation = ({ onClose, onSavePriorities }) => {
+	// State for managing conversation flow
 	const [currentPage, setCurrentPage] = useState(1);
-	const [selectedOptions, setSelectedOptions] = useState({
-		page2: ['control', 'active'],
-		page3: ['body-reactions', 'fatigue'],
-		page4: ['pain', 'fatigue'],
-		page5: ['staying-active'],
-		page6: ['exercise-routine'],
-		page7: ['yes'],
-	});
+	const [conversationState, setConversationState] = useState('intro');
+	const [currentCategory, setCurrentCategory] = useState(null);
+	const [currentSubcategory, setCurrentSubcategory] = useState(null);
 
-	const totalPages = 7;
+	// State for storing user selections
+	const [selectedCategories, setSelectedCategories] = useState([]);
+	const [selectedSubcategories, setSelectedSubcategories] = useState({});
+	const [selectedItems, setSelectedItems] = useState({});
+	const [finalSelections, setFinalSelections] = useState([]);
 
-	// Note: In this prototype, the selections are pre-determined and not interactive
-	const handleOptionChange = (page, option, isMultiple = true) => {
-		// This function is kept for future implementation but doesn't change state
-		// in the current prototype as selections are fixed
-		console.log(`Selected ${option} on page ${page}`);
+	// Determine the total number of pages dynamically
+	const [totalPages, setTotalPages] = useState(1);
+
+	// Calculate the number of pages based on user selections
+	useEffect(() => {
+		// Start with intro page
+		let pages = 1;
+
+		// Add a page for category selection
+		if (conversationState !== 'intro') pages++;
+
+		// Add pages for each selected category (subcategory selection)
+		if (selectedCategories.length > 0) pages++;
+
+		// Add a page for each subcategory with items
+		Object.keys(selectedSubcategories).forEach((categoryId) => {
+			if (selectedSubcategories[categoryId].length > 0) pages++;
+		});
+
+		// Add final confirmation page if we have any selections
+		if (Object.keys(selectedItems).length > 0) pages++;
+
+		setTotalPages(pages);
+	}, [
+		conversationState,
+		selectedCategories,
+		selectedSubcategories,
+		selectedItems,
+	]);
+
+	const handleOptionChange = (id, type, isMultiple = true) => {
+		if (type === 'category') {
+			// Handle category selection
+			setSelectedCategories((prev) => {
+				if (prev.includes(id)) {
+					// Remove the category if already selected
+					const newCategories = prev.filter((catId) => catId !== id);
+
+					// Also remove any subcategories and items from this category
+					const newSubcategories = { ...selectedSubcategories };
+					delete newSubcategories[id];
+					setSelectedSubcategories(newSubcategories);
+
+					const newItems = { ...selectedItems };
+					Object.keys(newItems).forEach((key) => {
+						if (key.startsWith(id)) {
+							delete newItems[key];
+						}
+					});
+					setSelectedItems(newItems);
+
+					return newCategories;
+				} else {
+					// Add the category if not already selected
+					return [...prev, id];
+				}
+			});
+		} else if (type === 'subcategory') {
+			// Handle subcategory selection
+			const categoryId = currentCategory;
+
+			setSelectedSubcategories((prev) => {
+				const currentCategorySubcategories = prev[categoryId] || [];
+
+				if (currentCategorySubcategories.includes(id)) {
+					// Remove the subcategory if already selected
+					const newSubcategories = {
+						...prev,
+						[categoryId]: currentCategorySubcategories.filter(
+							(subId) => subId !== id
+						),
+					};
+
+					// Also remove any items from this subcategory
+					const newItems = { ...selectedItems };
+					Object.keys(newItems).forEach((key) => {
+						if (key.startsWith(`${categoryId}_${id}`)) {
+							delete newItems[key];
+						}
+					});
+					setSelectedItems(newItems);
+
+					return newSubcategories;
+				} else {
+					// Add the subcategory if not already selected
+					return {
+						...prev,
+						[categoryId]: [...currentCategorySubcategories, id],
+					};
+				}
+			});
+		} else if (type === 'item') {
+			// Handle item selection
+			const categoryId = currentCategory;
+			const subcategoryId = currentSubcategory;
+			const itemKey = `${categoryId}_${subcategoryId}_${id}`;
+
+			setSelectedItems((prev) => {
+				if (prev[itemKey]) {
+					// Remove the item if already selected
+					const newItems = { ...prev };
+					delete newItems[itemKey];
+					return newItems;
+				} else {
+					// Add the item if not already selected
+					return {
+						...prev,
+						[itemKey]: {
+							categoryId,
+							subcategoryId,
+							itemId: id,
+						},
+					};
+				}
+			});
+		}
 	};
 
-	const isOptionSelected = (page, option) => {
-		return selectedOptions[page]?.includes(option) || false;
+	const isOptionSelected = (id, type) => {
+		if (type === 'category') {
+			return selectedCategories.includes(id);
+		} else if (type === 'subcategory') {
+			const categorySubcategories =
+				selectedSubcategories[currentCategory] || [];
+			return categorySubcategories.includes(id);
+		} else if (type === 'item') {
+			const itemKey = `${currentCategory}_${currentSubcategory}_${id}`;
+			return !!selectedItems[itemKey];
+		}
+		return false;
 	};
 
 	const handleNext = () => {
-		if (currentPage < totalPages) {
-			setCurrentPage(currentPage + 1);
-			// Add this line to scroll to the top
-			document.querySelector('.cafy-conversation-content').scrollTop = 0;
-		} else {
-			// If we're on the last page and the user clicks Next/Save
-			// Call the onSavePriorities function passed from the parent
-			if (onSavePriorities) {
-				onSavePriorities();
-			} else {
-				onClose();
+		// Transition logic based on current state
+		if (conversationState === 'intro') {
+			setConversationState('categories');
+			setCurrentPage(2);
+		} else if (conversationState === 'categories') {
+			if (selectedCategories.length > 0) {
+				setConversationState('subcategories');
+				setCurrentCategory(selectedCategories[0]);
+				setCurrentPage(3);
 			}
+		} else if (conversationState === 'subcategories') {
+			const currentCategoryIndex = selectedCategories.indexOf(currentCategory);
+			const currentCategorySubcategories =
+				selectedSubcategories[currentCategory] || [];
+
+			if (currentCategorySubcategories.length > 0) {
+				setConversationState('items');
+				setCurrentSubcategory(currentCategorySubcategories[0]);
+				setCurrentPage(4);
+			} else if (currentCategoryIndex < selectedCategories.length - 1) {
+				// Move to the next category
+				setCurrentCategory(selectedCategories[currentCategoryIndex + 1]);
+			} else {
+				// Prepare final selections if we have any items selected
+				if (Object.keys(selectedItems).length > 0) {
+					prepareFinalSelections();
+					setConversationState('confirmation');
+					setCurrentPage(currentPage + 1);
+				}
+			}
+		} else if (conversationState === 'items') {
+			const currentCategoryIndex = selectedCategories.indexOf(currentCategory);
+			const currentCategorySubcategories =
+				selectedSubcategories[currentCategory] || [];
+			const currentSubcategoryIndex =
+				currentCategorySubcategories.indexOf(currentSubcategory);
+
+			if (currentSubcategoryIndex < currentCategorySubcategories.length - 1) {
+				// Move to the next subcategory
+				setCurrentSubcategory(
+					currentCategorySubcategories[currentSubcategoryIndex + 1]
+				);
+			} else if (currentCategoryIndex < selectedCategories.length - 1) {
+				// Move to the next category
+				setCurrentCategory(selectedCategories[currentCategoryIndex + 1]);
+				setConversationState('subcategories');
+			} else {
+				// Prepare final selections
+				prepareFinalSelections();
+				setConversationState('confirmation');
+				setCurrentPage(currentPage + 1);
+			}
+		} else if (conversationState === 'confirmation') {
+			// Save priorities and close conversation
+			onSavePriorities(finalSelections);
 		}
 	};
 
 	const handlePrevious = () => {
 		if (currentPage > 1) {
+			if (conversationState === 'categories') {
+				setConversationState('intro');
+			} else if (conversationState === 'subcategories') {
+				setConversationState('categories');
+			} else if (conversationState === 'items') {
+				const currentCategorySubcategories =
+					selectedSubcategories[currentCategory] || [];
+				const currentSubcategoryIndex =
+					currentCategorySubcategories.indexOf(currentSubcategory);
+
+				if (currentSubcategoryIndex > 0) {
+					// Go to previous subcategory
+					setCurrentSubcategory(
+						currentCategorySubcategories[currentSubcategoryIndex - 1]
+					);
+				} else {
+					// Go back to subcategories for this category
+					setConversationState('subcategories');
+				}
+			} else if (conversationState === 'confirmation') {
+				// Go back to the last item selection page
+				const lastCategory = selectedCategories[selectedCategories.length - 1];
+				const lastCategorySubcategories =
+					selectedSubcategories[lastCategory] || [];
+
+				if (lastCategorySubcategories.length > 0) {
+					setCurrentCategory(lastCategory);
+					setCurrentSubcategory(
+						lastCategorySubcategories[lastCategorySubcategories.length - 1]
+					);
+					setConversationState('items');
+				} else {
+					setCurrentCategory(lastCategory);
+					setConversationState('subcategories');
+				}
+			}
+
 			setCurrentPage(currentPage - 1);
-			// Add this line to scroll to the top
-			document.querySelector('.cafy-conversation-content').scrollTop = 0;
+			// Scroll to the top when navigating
+			document.querySelector('.cafy-conversation-content')?.scrollTo(0, 0);
 		}
+	};
+
+	// Helper function to get category, subcategory or item name by ID
+	const getNameById = (id, type) => {
+		if (type === 'category') {
+			const category = taxonomyData.categories.find((cat) => cat.id === id);
+			return category ? category.name : '';
+		} else if (type === 'subcategory') {
+			const category = taxonomyData.categories.find(
+				(cat) => cat.id === currentCategory
+			);
+			if (category) {
+				const subcategory = category.subcategories.find((sub) => sub.id === id);
+				return subcategory ? subcategory.name : '';
+			}
+			return '';
+		} else if (type === 'item') {
+			const category = taxonomyData.categories.find(
+				(cat) => cat.id === currentCategory
+			);
+			if (category) {
+				const subcategory = category.subcategories.find(
+					(sub) => sub.id === currentSubcategory
+				);
+				if (subcategory) {
+					const item = subcategory.items.find((item) => item.id === id);
+					return item ? item.name : '';
+				}
+			}
+			return '';
+		}
+		return '';
+	};
+
+	// Prepare the list of final selections for the confirmation page
+	const prepareFinalSelections = () => {
+		const selections = [];
+
+		Object.values(selectedItems).forEach((item) => {
+			const { categoryId, subcategoryId, itemId } = item;
+
+			// Find the category, subcategory, and item in the taxonomy
+			const category = taxonomyData.categories.find(
+				(cat) => cat.id === categoryId
+			);
+			if (category) {
+				const subcategory = category.subcategories.find(
+					(sub) => sub.id === subcategoryId
+				);
+				if (subcategory) {
+					const itemObj = subcategory.items.find((i) => i.id === itemId);
+					if (itemObj) {
+						selections.push({
+							id: `${categoryId}_${subcategoryId}_${itemId}`,
+							category: category.name,
+							subcategory: subcategory.name,
+							item: itemObj.name,
+							categoryId,
+							subcategoryId,
+							itemId,
+						});
+					}
+				}
+			}
+		});
+
+		setFinalSelections(selections);
+	};
+
+	// Remove a selected item from the confirmation page
+	const handleRemoveSelection = (selectionId) => {
+		// Remove the item from selectedItems
+		setSelectedItems((prev) => {
+			const newItems = { ...prev };
+			delete newItems[selectionId];
+			return newItems;
+		});
+
+		// Update finalSelections
+		setFinalSelections((prev) =>
+			prev.filter((item) => item.id !== selectionId)
+		);
+	};
+
+	// Get the current category's question if available
+	const getCurrentQuestion = () => {
+		if (conversationState === 'categories') {
+			return "Select the areas you'd like to focus on for your care priorities:";
+		} else if (conversationState === 'subcategories' && currentCategory) {
+			const category = taxonomyData.categories.find(
+				(cat) => cat.id === currentCategory
+			);
+			return (
+				category?.question ||
+				`What specific aspects of ${category?.name} would you like to address?`
+			);
+		} else if (
+			conversationState === 'items' &&
+			currentCategory &&
+			currentSubcategory
+		) {
+			return `Select the specific concerns you'd like to address:`;
+		}
+		return '';
+	};
+
+	// Handle adding more options after review
+	const handleAddMore = () => {
+		setConversationState('categories');
+		setCurrentPage(2);
 	};
 
 	return (
@@ -79,20 +390,7 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 							onClick={onClose}
 							aria-label='Close conversation'
 						>
-							<svg
-								xmlns='http://www.w3.org/2000/svg'
-								width='24'
-								height='24'
-								viewBox='0 0 24 24'
-								fill='none'
-								stroke='white'
-								strokeWidth='2'
-								strokeLinecap='round'
-								strokeLinejoin='round'
-							>
-								<line x1='18' y1='6' x2='6' y2='18'></line>
-								<line x1='6' y1='6' x2='18' y2='18'></line>
-							</svg>
+							<IoClose aria-hidden='true' size={24} color='white' />
 						</button>
 					</div>
 				</div>
@@ -110,7 +408,8 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 				</div>
 
 				<div className='cafy-conversation-content'>
-					{currentPage === 1 && (
+					{/* Introduction Page */}
+					{conversationState === 'intro' && (
 						<div className='cafy-page'>
 							<div className='cafy-message-container'>
 								<div className='cafy-message cafy-dark-box'>
@@ -128,16 +427,17 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 										</h2>
 									</div>
 									<p>
-										I'm here to help you set your care priorities so eCare PD
-										can offer you the best care tips and resources. Let's get
-										started.
+										I'm here to help you set your care priorities so that
+										eCare-PD can provide you with care tips and resources for
+										you. Let's start!
 									</p>
 								</div>
 							</div>
 						</div>
 					)}
 
-					{currentPage === 2 && (
+					{/* Category Selection Page */}
+					{conversationState === 'categories' && (
 						<div className='cafy-page'>
 							<div className='cafy-message-container'>
 								<div className='cafy-message cafy-dark-box'>
@@ -148,452 +448,46 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 											className='cafy-conv-logo'
 										/>
 										<h2 className='cafy-page-title'>
-											Living with Parkinson's can affect your life in many ways.
-											Everyone's experience is different.
+											Let's identify your care priorities
 										</h2>
 									</div>
+									<p>{getCurrentQuestion()}</p>
 									<p>
-										What are the biggest challenges for you right now? Select
-										all options most important for you today.
+										You can select multiple options that are important to you
+										today.
 									</p>
 								</div>
 							</div>
 
 							<div className='cafy-options'>
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page2', 'control') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page2', 'control')}
-										onChange={() => handleOptionChange('page2', 'control')}
-										name='challenge'
-										value='control'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>
-										I want to feel more in control of my body
-									</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page2', 'understand') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page2', 'understand')}
-										onChange={() => handleOptionChange('page2', 'understand')}
-										name='challenge'
-										value='understand'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>
-										I want to understand my physical symptoms
-									</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page2', 'emotions') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page2', 'emotions')}
-										onChange={() => handleOptionChange('page2', 'emotions')}
-										name='challenge'
-										value='emotions'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>
-										I want to manage my emotions
-									</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page2', 'think') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page2', 'think')}
-										onChange={() => handleOptionChange('page2', 'think')}
-										name='challenge'
-										value='think'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>
-										I want to think more clearly
-									</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page2', 'active') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page2', 'active')}
-										onChange={() => handleOptionChange('page2', 'active')}
-										name='challenge'
-										value='active'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>
-										I want to stay active
-									</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page2', 'tasks') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page2', 'tasks')}
-										onChange={() => handleOptionChange('page2', 'tasks')}
-										name='challenge'
-										value='tasks'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>
-										I want to manage my daily tasks
-									</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page2', 'help') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page2', 'help')}
-										onChange={() => handleOptionChange('page2', 'help')}
-										name='challenge'
-										value='help'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>
-										I need help figuring it out
-									</span>
-								</label>
-							</div>
-						</div>
-					)}
-
-					{currentPage === 3 && (
-						<div className='cafy-page'>
-							<div className='cafy-message-container'>
-								<div className='cafy-message cafy-dark-box'>
-									<div className='cafy-message-header'>
-										<img
-											src={cafyLogo}
-											alt='CAFY Logo'
-											className='cafy-conv-logo'
-										/>
-										<h2 className='cafy-page-title'>
-											Are you experiencing challenges with movement, body
-											control or physical sensations?
-										</h2>
-									</div>
-									<p>Select all options most important for you today.</p>
-								</div>
-							</div>
-
-							<div className='cafy-options'>
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page3', 'moving') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page3', 'moving')}
-										onChange={() => handleOptionChange('page3', 'moving')}
-										name='physical'
-										value='moving'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>Moving and walking</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page3', 'body-reactions')
-											? 'selected'
-											: ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page3', 'body-reactions')}
-										onChange={() =>
-											handleOptionChange('page3', 'body-reactions')
-										}
-										name='physical'
-										value='body-reactions'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>
-										Body reactions and sensations
-									</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page3', 'bladder') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page3', 'bladder')}
-										onChange={() => handleOptionChange('page3', 'bladder')}
-										name='physical'
-										value='bladder'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>Bladder control</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page3', 'digestion') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page3', 'digestion')}
-										onChange={() => handleOptionChange('page3', 'digestion')}
-										name='physical'
-										value='digestion'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>
-										Digestion and swallowing
-									</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page3', 'fatigue') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page3', 'fatigue')}
-										onChange={() => handleOptionChange('page3', 'fatigue')}
-										name='physical'
-										value='fatigue'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>
-										Fatigue and sleep disorders
-									</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page3', 'sensory') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page3', 'sensory')}
-										onChange={() => handleOptionChange('page3', 'sensory')}
-										name='physical'
-										value='sensory'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>Sensory changes</span>
-								</label>
-							</div>
-						</div>
-					)}
-
-					{currentPage === 4 && (
-						<div className='cafy-page'>
-							<div className='cafy-message-container'>
-								<div className='cafy-message cafy-dark-box'>
-									<div className='cafy-message-header'>
-										<img
-											src={cafyLogo}
-											alt='CAFY Logo'
-											className='cafy-conv-logo'
-										/>
-										<h2 className='cafy-page-title'>
-											Be more specific about where you want to focus your care
-											priorities.
-										</h2>
-									</div>
-									<p>Select all options most important for you today.</p>
-								</div>
-							</div>
-
-							<div className='cafy-options-group'>
-								<h3 className='cafy-group-title'>
-									Body Reactions and Sensations
-								</h3>
-								<div className='cafy-options'>
+								{taxonomyData.categories.map((category) => (
 									<label
+										key={category.id}
 										className={`cafy-option ${
-											isOptionSelected('page4', 'pain') ? 'selected' : ''
-										}`}
-									>
-										<input
-											type='checkbox'
-											checked={isOptionSelected('page4', 'pain')}
-											onChange={() => handleOptionChange('page4', 'pain')}
-											name='specific'
-											value='pain'
-										/>
-										<span className='cafy-checkbox'></span>
-										<span className='cafy-option-text'>Pain</span>
-									</label>
-
-									<label
-										className={`cafy-option ${
-											isOptionSelected('page4', 'hypotension') ? 'selected' : ''
-										}`}
-									>
-										<input
-											type='checkbox'
-											checked={isOptionSelected('page4', 'hypotension')}
-											onChange={() =>
-												handleOptionChange('page4', 'hypotension')
-											}
-											name='specific'
-											value='hypotension'
-										/>
-										<span className='cafy-checkbox'></span>
-										<span className='cafy-option-text'>
-											Orthostatic hypotension
-										</span>
-									</label>
-
-									<label
-										className={`cafy-option ${
-											isOptionSelected('page4', 'sweating') ? 'selected' : ''
-										}`}
-									>
-										<input
-											type='checkbox'
-											checked={isOptionSelected('page4', 'sweating')}
-											onChange={() => handleOptionChange('page4', 'sweating')}
-											name='specific'
-											value='sweating'
-										/>
-										<span className='cafy-checkbox'></span>
-										<span className='cafy-option-text'>Sweating</span>
-									</label>
-
-									<label
-										className={`cafy-option ${
-											isOptionSelected('page4', 'skin') ? 'selected' : ''
-										}`}
-									>
-										<input
-											type='checkbox'
-											checked={isOptionSelected('page4', 'skin')}
-											onChange={() => handleOptionChange('page4', 'skin')}
-											name='specific'
-											value='skin'
-										/>
-										<span className='cafy-checkbox'></span>
-										<span className='cafy-option-text'>Skin</span>
-									</label>
-								</div>
-							</div>
-
-							<div className='cafy-options-group'>
-								<h3 className='cafy-group-title'>
-									Fatigue and Sleep Disorders
-								</h3>
-								<div className='cafy-options'>
-									<label
-										className={`cafy-option ${
-											isOptionSelected('page4', 'insomnia') ? 'selected' : ''
-										}`}
-									>
-										<input
-											type='checkbox'
-											checked={isOptionSelected('page4', 'insomnia')}
-											onChange={() => handleOptionChange('page4', 'insomnia')}
-											name='specific'
-											value='insomnia'
-										/>
-										<span className='cafy-checkbox'></span>
-										<span className='cafy-option-text'>Insomnia</span>
-									</label>
-
-									<label
-										className={`cafy-option ${
-											isOptionSelected('page4', 'fatigue') ? 'selected' : ''
-										}`}
-									>
-										<input
-											type='checkbox'
-											checked={isOptionSelected('page4', 'fatigue')}
-											onChange={() => handleOptionChange('page4', 'fatigue')}
-											name='specific'
-											value='fatigue'
-										/>
-										<span className='cafy-checkbox'></span>
-										<span className='cafy-option-text'>Fatigue</span>
-									</label>
-
-									<label
-										className={`cafy-option ${
-											isOptionSelected('page4', 'daytime-sleepiness')
+											isOptionSelected(category.id, 'category')
 												? 'selected'
 												: ''
 										}`}
 									>
 										<input
 											type='checkbox'
-											checked={isOptionSelected('page4', 'daytime-sleepiness')}
+											checked={isOptionSelected(category.id, 'category')}
 											onChange={() =>
-												handleOptionChange('page4', 'daytime-sleepiness')
+												handleOptionChange(category.id, 'category')
 											}
-											name='specific'
-											value='daytime-sleepiness'
+											name='category'
+											value={category.id}
 										/>
 										<span className='cafy-checkbox'></span>
-										<span className='cafy-option-text'>Daytime sleepiness</span>
+										<span className='cafy-option-text'>{category.name}</span>
 									</label>
-
-									<label
-										className={`cafy-option ${
-											isOptionSelected('page4', 'restless-legs')
-												? 'selected'
-												: ''
-										}`}
-									>
-										<input
-											type='checkbox'
-											checked={isOptionSelected('page4', 'restless-legs')}
-											onChange={() =>
-												handleOptionChange('page4', 'restless-legs')
-											}
-											name='specific'
-											value='restless-legs'
-										/>
-										<span className='cafy-checkbox'></span>
-										<span className='cafy-option-text'>Restless legs</span>
-									</label>
-								</div>
+								))}
 							</div>
 						</div>
 					)}
 
-					{currentPage === 5 && (
+					{/* Subcategory Selection Page */}
+					{conversationState === 'subcategories' && currentCategory && (
 						<div className='cafy-page'>
 							<div className='cafy-message-container'>
 								<div className='cafy-message cafy-dark-box'>
@@ -604,186 +498,100 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 											className='cafy-conv-logo'
 										/>
 										<h2 className='cafy-page-title'>
-											Would you like to find ways to stay active, exercise and
-											enjoy your hobbies?
+											{getNameById(currentCategory, 'category')}
 										</h2>
 									</div>
-									<p>Select all options most important for you today.</p>
+									<p>{getCurrentQuestion()}</p>
+									<p>
+										You can select multiple options that are important to you.
+									</p>
 								</div>
 							</div>
 
 							<div className='cafy-options'>
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page5', 'staying-active')
-											? 'selected'
-											: ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page5', 'staying-active')}
-										onChange={() =>
-											handleOptionChange('page5', 'staying-active')
-										}
-										name='active'
-										value='staying-active'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>Staying active</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page5', 'social') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page5', 'social')}
-										onChange={() => handleOptionChange('page5', 'social')}
-										name='active'
-										value='social'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>
-										Social life and relationships
-									</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page5', 'diet') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page5', 'diet')}
-										onChange={() => handleOptionChange('page5', 'diet')}
-										name='active'
-										value='diet'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>Diet and nutrition</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page5', 'tasks') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page5', 'tasks')}
-										onChange={() => handleOptionChange('page5', 'tasks')}
-										name='active'
-										value='tasks'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>Managing daily tasks</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page5', 'medication') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page5', 'medication')}
-										onChange={() => handleOptionChange('page5', 'medication')}
-										name='active'
-										value='medication'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>
-										Medication and treatment options
-									</span>
-								</label>
+								{taxonomyData.categories
+									.find((cat) => cat.id === currentCategory)
+									?.subcategories.map((subcategory) => (
+										<label
+											key={subcategory.id}
+											className={`cafy-option ${
+												isOptionSelected(subcategory.id, 'subcategory')
+													? 'selected'
+													: ''
+											}`}
+										>
+											<input
+												type='checkbox'
+												checked={isOptionSelected(
+													subcategory.id,
+													'subcategory'
+												)}
+												onChange={() =>
+													handleOptionChange(subcategory.id, 'subcategory')
+												}
+												name='subcategory'
+												value={subcategory.id}
+											/>
+											<span className='cafy-checkbox'></span>
+											<span className='cafy-option-text'>
+												{subcategory.name}
+											</span>
+										</label>
+									))}
 							</div>
 						</div>
 					)}
 
-					{currentPage === 6 && (
-						<div className='cafy-page'>
-							<div className='cafy-message-container'>
-								<div className='cafy-message cafy-dark-box'>
-									<div className='cafy-message-header'>
-										<img
-											src={cafyLogo}
-											alt='CAFY Logo'
-											className='cafy-conv-logo'
-										/>
-										<h2 className='cafy-page-title'>
-											Be more specific about where you want to manage your care
-											priorities.
-										</h2>
+					{/* Item Selection Page */}
+					{conversationState === 'items' &&
+						currentCategory &&
+						currentSubcategory && (
+							<div className='cafy-page'>
+								<div className='cafy-message-container'>
+									<div className='cafy-message cafy-dark-box'>
+										<div className='cafy-message-header'>
+											<img
+												src={cafyLogo}
+												alt='CAFY Logo'
+												className='cafy-conv-logo'
+											/>
+											<h2 className='cafy-page-title'>
+												{getNameById(currentSubcategory, 'subcategory')}
+											</h2>
+										</div>
+										<p>{getCurrentQuestion()}</p>
+										<p>Select all that apply to your situation.</p>
 									</div>
-									<p>Select all options most important for you today.</p>
+								</div>
+
+								<div className='cafy-options'>
+									{taxonomyData.categories
+										.find((cat) => cat.id === currentCategory)
+										?.subcategories.find((sub) => sub.id === currentSubcategory)
+										?.items.map((item) => (
+											<label
+												key={item.id}
+												className={`cafy-option ${
+													isOptionSelected(item.id, 'item') ? 'selected' : ''
+												}`}
+											>
+												<input
+													type='checkbox'
+													checked={isOptionSelected(item.id, 'item')}
+													onChange={() => handleOptionChange(item.id, 'item')}
+													name='item'
+													value={item.id}
+												/>
+												<span className='cafy-checkbox'></span>
+												<span className='cafy-option-text'>{item.name}</span>
+											</label>
+										))}
 								</div>
 							</div>
+						)}
 
-							<div className='cafy-options'>
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page6', 'exercise-routine')
-											? 'selected'
-											: ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page6', 'exercise-routine')}
-										onChange={() =>
-											handleOptionChange('page6', 'exercise-routine')
-										}
-										name='specific-active'
-										value='exercise-routine'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>Exercise routine</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page6', 'physical-activity')
-											? 'selected'
-											: ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page6', 'physical-activity')}
-										onChange={() =>
-											handleOptionChange('page6', 'physical-activity')
-										}
-										name='specific-active'
-										value='physical-activity'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>Physical activity</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page6', 'hobbies') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='checkbox'
-										checked={isOptionSelected('page6', 'hobbies')}
-										onChange={() => handleOptionChange('page6', 'hobbies')}
-										name='specific-active'
-										value='hobbies'
-									/>
-									<span className='cafy-checkbox'></span>
-									<span className='cafy-option-text'>Hobbies</span>
-								</label>
-							</div>
-						</div>
-					)}
-
-					{currentPage === 7 && (
+					{/* Confirmation Page */}
+					{conversationState === 'confirmation' && (
 						<div className='cafy-page'>
 							<div className='cafy-message-container'>
 								<div className='cafy-message cafy-dark-box'>
@@ -795,49 +603,41 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 										/>
 										<h2 className='cafy-page-title'>You have chosen:</h2>
 									</div>
-									<ul className='cafy-summary-list'>
-										<li>Pain</li>
-										<li>Fatigue</li>
-										<li>Exercise routine</li>
-									</ul>
+									{finalSelections.length > 0 ? (
+										<ul className='cafy-summary-list'>
+											{finalSelections.map((selection) => (
+												<li key={selection.id} className='cafy-summary-item'>
+													{selection.item}
+													<button
+														className='cafy-remove-button'
+														onClick={() => handleRemoveSelection(selection.id)}
+														aria-label={`Remove ${selection.item}`}
+													>
+														<IoTrashOutline />
+													</button>
+												</li>
+											))}
+										</ul>
+									) : (
+										<p>
+											No selections made. Please go back and select your care
+											priorities.
+										</p>
+									)}
 									<p>Does this look right?</p>
 								</div>
 							</div>
 
-							<div className='cafy-options'>
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page7', 'yes') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='radio'
-										checked={isOptionSelected('page7', 'yes')}
-										onChange={() => handleOptionChange('page7', 'yes', false)}
-										name='confirm'
-										value='yes'
-									/>
-									<span className='cafy-radio'></span>
-									<span className='cafy-option-text'>Yes</span>
-								</label>
-
-								<label
-									className={`cafy-option ${
-										isOptionSelected('page7', 'no') ? 'selected' : ''
-									}`}
-								>
-									<input
-										type='radio'
-										checked={isOptionSelected('page7', 'no')}
-										onChange={() => handleOptionChange('page7', 'no', false)}
-										name='confirm'
-										value='no'
-									/>
-									<span className='cafy-radio'></span>
-									<span className='cafy-option-text'>
-										No, I want to change something
-									</span>
-								</label>
+							<div className='cafy-confirmation-options'>
+								<div className='cafy-radio-group'>
+									<button
+										className='button secondary-button cafy-add-more-button'
+										onClick={handleAddMore}
+										aria-label='No, I want to add something'
+									>
+										No, I want to add something
+									</button>
+								</div>
 							</div>
 						</div>
 					)}
@@ -848,12 +648,18 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 						className='button primary-button cafy-next-button'
 						onClick={handleNext}
 						aria-label={
-							currentPage === totalPages
-								? 'Finish and save your care priorities'
+							conversationState === 'confirmation'
+								? 'Confirm and save your care priorities'
 								: 'Continue to next question'
 						}
+						disabled={
+							(conversationState === 'categories' &&
+								selectedCategories.length === 0) ||
+							(conversationState === 'confirmation' &&
+								finalSelections.length === 0)
+						}
 					>
-						{currentPage === totalPages ? 'Save my priorities' : 'Next'}
+						{conversationState === 'confirmation' ? 'Yes, confirm' : 'Next'}
 					</button>
 				</div>
 			</div>

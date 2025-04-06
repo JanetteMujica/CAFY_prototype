@@ -1,0 +1,311 @@
+{
+	"categories": [
+		{
+			"id": "physical_health",
+			"name": "Physical Health (Movement & Body Functions)",
+			"goal": "I want to feel more in control of my body or understand my physical symptoms.",
+			"question": "Are you experiencing any challenges with movement, body control, or physical sensations? Or, do you want pay attention to specific symptoms? Select the most important for you today.",
+			"subcategories": [
+				{
+					"id": "moving_walking",
+					"name": "Moving & Walking",
+					"items": [
+						{
+							"id": "tremor",
+							"name": "Tremor"
+						},
+						{
+							"id": "rigidity",
+							"name": "Rigidity"
+						},
+						{
+							"id": "bradykinesia",
+							"name": "Bradykinesia (slow movement)"
+						},
+						{
+							"id": "postural_gait",
+							"name": "Postural/gait impairment"
+						}
+					]
+				},
+				{
+					"id": "body_reactions",
+					"name": "Body Reactions & Sensations",
+					"items": [
+						{
+							"id": "orthostatic_hypotension",
+							"name": "Orthostatic hypotension"
+						},
+						{
+							"id": "sweating_problems",
+							"name": "Sweating Problems"
+						},
+						{
+							"id": "pain",
+							"name": "Pain"
+						},
+						{
+							"id": "skin_problems",
+							"name": "Skin Problems"
+						}
+					]
+				},
+				{
+					"id": "digestion_swallowing",
+					"name": "Digestion & Swallowing",
+					"items": [
+						{
+							"id": "eating_problems",
+							"name": "Eating Problems"
+						},
+						{
+							"id": "saliva_control",
+							"name": "Saliva control"
+						},
+						{
+							"id": "swallowing_problems",
+							"name": "Swallowing Problems"
+						},
+						{
+							"id": "constipation",
+							"name": "Constipation"
+						},
+						{
+							"id": "urinary_issues",
+							"name": "Urinary Issues"
+						}
+					]
+				},
+				{
+					"id": "sleep_disorders",
+					"name": "Sleep Disorders & Fatigue",
+					"items": [
+						{
+							"id": "insomnia",
+							"name": "Insomnia"
+						},
+						{
+							"id": "fatigue",
+							"name": "Fatigue"
+						},
+						{
+							"id": "daytime_sleepiness",
+							"name": "Daytime sleepiness"
+						},
+						{
+							"id": "restless_legs",
+							"name": "Restless Legs"
+						}
+					]
+				},
+				{
+					"id": "sensory_changes",
+					"name": "Sensory Changes",
+					"items": [
+						{
+							"id": "vision_problems",
+							"name": "Vision Problems"
+						},
+						{
+							"id": "loss_of_smell",
+							"name": "Loss of smell"
+						},
+						{
+							"id": "abnormal_sensations",
+							"name": "Abnormal sensations"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "mental_health",
+			"name": "Mental Health (Mood, Emotion & Thinking)",
+			"goal": "I want to manage my emotions or think more clearly.",
+			"question": "Are you feeling sad, anxious, or lack energy to do things? Or, do you forget things easily? What would you like to focus first?",
+			"subcategories": [
+				{
+					"id": "mood_emotion",
+					"name": "Mood & Emotion",
+					"items": [
+						{
+							"id": "feeling_worried",
+							"name": "Feeling worried or anxious"
+						},
+						{
+							"id": "anxiety",
+							"name": "Anxiety"
+						},
+						{
+							"id": "apathy",
+							"name": "Apathy"
+						},
+						{
+							"id": "panic_attack",
+							"name": "Panic Attack"
+						},
+						{
+							"id": "impulse_control",
+							"name": "Impulse control"
+						},
+						{
+							"id": "depression",
+							"name": "Depression"
+						}
+					]
+				},
+				{
+					"id": "thinking_memory",
+					"name": "Thinking & Memory",
+					"items": [
+						{
+							"id": "memory_problems",
+							"name": "Memory Problems"
+						},
+						{
+							"id": "cognitive_changes",
+							"name": "Cognitive Changes"
+						},
+						{
+							"id": "difficulty_focusing",
+							"name": "Difficulty Focusing"
+						}
+					]
+				},
+				{
+					"id": "seeing_hearing_things",
+					"name": "Seeing or hearing things",
+					"items": [
+						{
+							"id": "hallucinations",
+							"name": "Hallucinations"
+						},
+						{
+							"id": "delusions",
+							"name": "Delusions/Illusions"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "lifestyle_wellbeing",
+			"name": "Lifestyle & Well-Being",
+			"goal": "I want to stay active, to manage my daily tasks or improve my well-being.",
+			"question": "Would you like to find ways to stay active, do exercices or enjoy hobbies? Or would you like advices to make daily tasks easier or for managin your medication? Select the most important for you today.",
+			"subcategories": [
+				{
+					"id": "staying_active",
+					"name": "Staying active",
+					"items": [
+						{
+							"id": "exercise",
+							"name": "Exercise & Physical activity"
+						},
+						{
+							"id": "hobbies",
+							"name": "Hobbies"
+						}
+					]
+				},
+				{
+					"id": "social_life",
+					"name": "Social Life & Relationship",
+					"items": [
+						{
+							"id": "living_alone",
+							"name": "Living Alone"
+						},
+						{
+							"id": "speech_communication",
+							"name": "Speech & Communication"
+						},
+						{
+							"id": "intimacy_sexuality",
+							"name": "Intimacy/Sexuality"
+						}
+					]
+				},
+				{
+					"id": "diet_nutrition",
+					"name": "Diet & Nutrition",
+					"items": [
+						{
+							"id": "weight",
+							"name": "Weight"
+						},
+						{
+							"id": "nutrition_advice",
+							"name": "Nutrition Advices"
+						}
+					]
+				},
+				{
+					"id": "daily_tasks",
+					"name": "Managing Daily Tasks",
+					"items": [
+						{
+							"id": "reorganizing_home",
+							"name": "Reorganizing Home (Home safety)"
+						},
+						{
+							"id": "assistive_tools",
+							"name": "Using Assistive Tools"
+						},
+						{
+							"id": "adapting_routines",
+							"name": "Adapting Routines (e.i., bathing, dressing, cooking)"
+						},
+						{
+							"id": "physical_challenges",
+							"name": "Managing daily physical challenges (e.i., getting out of chair)"
+						}
+					]
+				},
+				{
+					"id": "medication",
+					"name": "Medication",
+					"items": [
+						{
+							"id": "managing_medication",
+							"name": "Managing medication"
+						},
+						{
+							"id": "drug_side_effects",
+							"name": "Common drug side-effect & their management"
+						},
+						{
+							"id": "new_treatments",
+							"name": "Information about new treatment (e.i., DBS)"
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "common_self-care",
+			"name": "Common Self-Care Habits",
+			"goal": "I am not sure - help me with common self-care habits",
+			"subcategories": [
+				{
+					"id": "daily_self_care",
+					"name": "Daily Self-Care Activities",
+					"items": [
+						{
+							"id": "regular_exercise",
+							"name": "Regular Exercise"
+						},
+						{
+							"id": "medication_adherence",
+							"name": "Medication Adherence"
+						},
+						{
+							"id": "adequate_sleep",
+							"name": "Adequate Sleep"
+						}
+					]
+				}
+			]
+		}
+	]
+}
