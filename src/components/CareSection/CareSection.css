@@ -53,6 +53,7 @@
 .link:hover {
 	color: var(--color-primary);
 	text-decoration: underline;
+	outline: 3px solid var(--color-bg-dark);
 }
 
 .link:focus {
@@ -83,18 +84,25 @@
 	transition: all 0.2s ease;
 	font-weight: 600;
 	min-height: 50px; /* Larger touch target */
+	text-align: left; /* Default to left-aligned text for all buttons */
+	display: flex;
+	align-items: center;
 }
 
 .primary-button {
 	background-color: var(--color-primary); /* Orange button */
 	color: var(--color-text-light);
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	padding-left: var(--space-4); /* Add left padding to match secondary button */
+	justify-content: flex-start; /* Left align text */
 }
 
 .primary-button:hover {
-	background-color: #e05825;
+	background-color: #f8b095;
 	transform: translateY(-2px);
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+	outline: 3px solid var(--color-bg-dark);
+	color: var(--color-text-light);
 }
 
 .primary-button:focus {
@@ -105,6 +113,67 @@
 .primary-button:active {
 	transform: translateY(0);
 	background-color: #d04d20;
+}
+
+/* Secondary button (Fitbit) styles */
+.secondary-button {
+	/* Fitbit blue */
+	background-color: var(--color-bg-dark);
+	color: var(--color-text-light);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	margin-top: var(--space-3);
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	padding-left: var(--space-1);
+	gap: var(--space-2);
+}
+
+.secondary-button:hover {
+	background-color: var(--color-blue-light);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+	outline: 3px solid var(--color-bg-dark);
+	color: var(--color-text-dark);
+}
+
+.secondary-button:focus {
+	outline: 3px solid #90caf9; /* Lighter blue for focus */
+	outline-offset: 2px;
+}
+
+.secondary-button:active {
+	transform: translateY(0);
+	background-color: var(--color-blue-dark);
+}
+
+.fitbit-button {
+	width: 100%; /* Full width for easy clicking */
+}
+
+.fitbit-button-icon {
+	width: 24px; /* Set a consistent width for the image */
+	height: auto;
+	/* Default state - no filter */
+	filter: none;
+	transition: filter 0.2s ease;
+	filter: brightness(0) invert(1);
+}
+
+/* Apply white filter on hover */
+.secondary-button:hover .fitbit-button-icon {
+	/* This combination of filters will make the image white */
+	filter: brightness(0) invert(0);
+}
+
+/* Also ensure the filter works when the button is focused or active */
+.secondary-button:focus .fitbit-button-icon,
+.secondary-button:active .fitbit-button-icon {
+	filter: brightness(0) invert(1);
+}
+
+.fitbit-button-text {
+	font-weight: 600;
 }
 
 /* Priority Cards Styles */
@@ -134,14 +203,21 @@
 
 .priority-description {
 	flex-grow: 1;
-	font-size: var(--font-size-16);
+	font-size: var(--font-size-19); /* Increased from 16 for better readability */
 	line-height: 1.5;
 	color: var(--color-text-dark);
 	margin-bottom: var(--space-4);
 }
 
+.priority-buttons-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
 .priority-button {
 	align-self: flex-start;
+	width: 100%; /* Full width for easier clicking target */
 }
 
 /* Responsive adjustments */
@@ -174,11 +250,33 @@
 		border: 2px solid currentColor;
 	}
 
+	.secondary-button {
+		border: 2px solid currentColor;
+	}
+
 	.cafy-box {
 		border: 2px solid currentColor;
 	}
 
 	.priority-card {
 		border: 2px solid currentColor;
+	}
+}
+
+/* Parkinson's-specific accessibility enhancements */
+.button {
+	min-height: 60px; /* Increased touch target */
+	margin-bottom: var(--space-2); /* Space between buttons */
+	letter-spacing: 0.5px; /* Slightly increased letter spacing */
+}
+
+/* Reduce motion for users who might have issues with movement */
+@media (prefers-reduced-motion: reduce) {
+	.button {
+		transition: none;
+	}
+
+	.button:hover {
+		transform: none;
 	}
 }

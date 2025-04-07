@@ -1,0 +1,352 @@
+.tracking-page {
+	max-width: 1900px;
+	margin: 0 auto;
+	padding: var(--space-5);
+}
+
+.page-title {
+	font-size: var(--font-size-32);
+	font-weight: 700;
+	color: var(--color-text-dark);
+	margin-bottom: var(--space-5);
+	line-height: 1.3;
+}
+
+/* Success message container and styling */
+.success-message-container {
+	background-color: var(--color-bg-alt);
+	border-radius: 10px;
+	padding: var(--space-5);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	margin-bottom: var(--space-5);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-top: 6px solid var(--color-primary);
+}
+
+.success-message {
+	background-color: #e8f5e9;
+	color: #2e7d32;
+	padding: var(--space-4);
+	border-radius: 8px;
+	margin-bottom: var(--space-4);
+	font-weight: 600;
+	border-left: 4px solid #2e7d32;
+	font-size: var(--font-size-21); /* Larger for better visibility */
+	text-align: center;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	line-height: 1.4;
+	width: 100%;
+}
+
+.success-actions {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-top: var(--space-4);
+}
+
+.return-home-button {
+	min-width: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.tracking-cards-container {
+	display: flex;
+	flex-direction: row;
+	gap: var(--space-5);
+	margin-bottom: var(--space-5);
+}
+
+.tracking-card {
+	background-color: var(--color-bg-alt);
+	border-radius: 10px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	padding: var(--space-5);
+	border-top: 6px solid var(--color-primary);
+	width: 100%;
+}
+
+/* Header container with title and emojis in same row */
+.card-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: var(--space-8);
+	margin-bottom: var(--space-5);
+}
+
+/* Left side with title and question */
+.title-container {
+	flex: 0 0 30%;
+	min-width: 200px;
+}
+
+.priority-name {
+	font-size: var(--font-size-27);
+	font-weight: 600;
+	color: var(--color-text-dark);
+	margin-bottom: var(--space-2);
+}
+
+.rating-instruction {
+	font-size: var(--font-size-19);
+	color: var(--color-text-dark);
+	font-weight: 500;
+	margin-top: var(--space-2);
+}
+
+/* Right side with emoji options */
+.emoji-options {
+	flex: 1;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: var(--space-3);
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.emoji-option {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 90px;
+}
+
+.emoji-button {
+	background: none;
+	border: 3px solid transparent;
+	border-radius: 50%;
+	cursor: pointer;
+	padding: var(--space-2);
+	transition: all 0.2s ease;
+	width: 80px;
+	height: 80px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.emoji-button:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.emoji-button:focus {
+	outline: none;
+	border-color: var(--color-primary);
+	box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.emoji {
+	font-size: 45px;
+	line-height: 1;
+}
+
+.emoji-description {
+	margin-top: var(--space-2);
+	font-size: var(--font-size-16);
+	text-align: center;
+	color: var(--color-text-dark);
+	font-weight: 500;
+}
+
+.emoji-option.selected .emoji-button {
+	border-color: var(--color-primary);
+	background-color: var(--color-primary-bg);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.comment-container {
+	margin-top: var(--space-4);
+}
+
+.comment-label {
+	display: block;
+	font-size: var(--font-size-19);
+	color: var(--color-text-dark);
+	margin-bottom: var(--space-2);
+	font-weight: 500;
+}
+
+/* Updated comment input to match JournalSection styling */
+.comment-input {
+	width: 100%;
+	padding: var(--space-3);
+	border: 2px solid #ddd;
+	border-radius: 8px;
+	font-size: var(--font-size-19);
+	color: var(--color-text-dark);
+	background-color: white;
+	resize: vertical;
+	min-height: 100px;
+	transition: border-color 0.2s;
+	font-family: inherit;
+	line-height: 1.6;
+}
+
+.comment-input:focus {
+	outline: none;
+	border-color: var(--color-primary);
+	box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.comment-input::placeholder {
+	color: #777;
+	opacity: 0.7;
+}
+
+.tracking-actions {
+	display: flex;
+	justify-content: flex-start;
+	margin-top: var(--space-4);
+}
+
+/* Updated button styles to match JournalSection */
+.confirm-button {
+	min-width: 180px;
+	justify-content: center;
+	padding: var(--space-3) var(--space-5);
+	border: none;
+	border-radius: 8px;
+	font-size: var(--font-size-19);
+	cursor: pointer;
+	transition: all 0.2s ease;
+	font-weight: 600;
+	min-height: 60px; /* Larger for easier targeting */
+}
+
+.primary-button {
+	background-color: var(--color-primary);
+	color: var(--color-text-light);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.primary-button:hover:not(:disabled) {
+	background-color: #e05825;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.primary-button:focus {
+	outline: 3px solid var(--color-primary-light);
+	outline-offset: 2px;
+}
+
+.primary-button:active:not(:disabled) {
+	transform: translateY(0);
+	background-color: #d04d20;
+}
+
+.primary-button:disabled {
+	background-color: #ccc;
+	cursor: not-allowed;
+	color: #666;
+	box-shadow: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+	.card-header {
+		flex-direction: column; /* Stack vertically on smaller screens */
+	}
+
+	.title-container {
+		width: 100%;
+		margin-bottom: var(--space-3);
+	}
+
+	.emoji-options {
+		width: 100%;
+	}
+}
+
+@media (max-width: 768px) {
+	.tracking-page {
+		padding: var(--space-4);
+	}
+
+	.tracking-cards-container {
+		flex-direction: column;
+	}
+
+	.emoji-options {
+		gap: var(--space-2);
+	}
+
+	.emoji-option {
+		width: 80px;
+	}
+
+	.emoji-button {
+		width: 64px;
+		height: 64px;
+	}
+
+	.emoji {
+		font-size: 36px;
+	}
+
+	.comment-input {
+		padding: var(--space-2);
+		font-size: var(--font-size-16);
+	}
+
+	.button {
+		width: 100%; /* Full width on mobile */
+	}
+
+	.success-message {
+		font-size: var(--font-size-19);
+		padding: var(--space-3);
+	}
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+	.tracking-card {
+		border: 2px solid currentColor;
+	}
+
+	.emoji-button {
+		border: 2px solid currentColor;
+	}
+
+	.emoji-option.selected .emoji-button {
+		border: 3px solid currentColor;
+	}
+
+	.comment-input {
+		border: 2px solid currentColor;
+	}
+
+	.primary-button {
+		border: 2px solid currentColor;
+	}
+
+	.success-message-container {
+		border: 2px solid currentColor;
+	}
+}
+
+/* Parkinson's-specific accessibility enhancements */
+.emoji-button {
+	min-height: 80px; /* Increased touch target */
+	min-width: 80px;
+}
+
+/* Reduce motion for users who might have issues with movement */
+@media (prefers-reduced-motion: reduce) {
+	.emoji-button {
+		transition: none;
+	}
+
+	.emoji-button:hover {
+		transform: none;
+	}
+}

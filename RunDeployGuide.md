@@ -136,7 +136,7 @@ git add .
 git commit -m "Description of changes"
 
 # 4. Push to GitHub
-git push origin main
+git push origin master
 
 # 5. Deploy to GitHub Pages
 npm run deploy

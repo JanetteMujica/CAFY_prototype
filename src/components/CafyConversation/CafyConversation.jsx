@@ -624,7 +624,6 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 											priorities.
 										</p>
 									)}
-									<p>Does this look right?</p>
 								</div>
 							</div>
 

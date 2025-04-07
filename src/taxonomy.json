@@ -182,7 +182,7 @@
 						},
 						{
 							"id": "delusions",
-							"name": "Delusions/Illusions"
+							"name": "Delusions / Illusions"
 						}
 					]
 				}
@@ -200,7 +200,7 @@
 					"items": [
 						{
 							"id": "exercise",
-							"name": "Exercise & Physical activity"
+							"name": "Physical activity"
 						},
 						{
 							"id": "hobbies",

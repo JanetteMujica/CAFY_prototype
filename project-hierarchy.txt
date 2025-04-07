@@ -17,7 +17,8 @@ CAFY_prototype
 │  ├─ App.css
 │  ├─ App.jsx
 │  ├─ assets
-│  │  └─ CAFY_Online.png
+│  │  ├─ CAFY_Online.png
+│  │  └─ watch.png
 │  ├─ components
 │  │  ├─ CafyConversation
 │  │  │  ├─ CafyConversation.css

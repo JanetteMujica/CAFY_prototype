@@ -18,10 +18,8 @@ const JournalSection = () => {
 			setSubmitted(true);
 			setJournalEntry('');
 
-			// Reset submission message after 3 seconds
-			setTimeout(() => {
-				setSubmitted(false);
-			}, 3000);
+			// Success message will persist until page refresh
+			// No timeout to remove the message
 		}, 1000);
 	};
 

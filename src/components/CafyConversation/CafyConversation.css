@@ -154,7 +154,7 @@
 }
 
 .cafy-page {
-	max-width: 800px;
+	max-width: 900px;
 	margin: 0 auto;
 }
 
@@ -283,12 +283,14 @@
 
 .cafy-summary-list {
 	list-style-type: none;
-	margin-left: 0;
+	margin-left: 50px;
 	margin-bottom: 16px;
+	max-width: 400px;
 }
 
 .cafy-summary-item {
-	font-size: 18px;
+	font-size: 30px;
+	font-weight: 800;
 	margin-bottom: 12px;
 	line-height: 1.4;
 	display: flex;
@@ -306,7 +308,8 @@
 	background: none;
 	border: none;
 	color: #fff;
-	font-size: 18px;
+	font-size: 50px;
+	font-weight: 800;
 	cursor: pointer;
 	padding: 6px;
 	border-radius: 50%;
@@ -334,11 +337,19 @@
 }
 
 .cafy-conversation-footer {
-	padding: 20px 24px;
+	/*padding: 20px 24px;
 	border-top: 1px solid #e5e5e5;
 	display: flex;
 	justify-content: space-between;
-	background-color: white;
+	background-color: white;*/
+	max-width: 900px;
+	margin: 0 auto;
+	display: flex !important;
+	justify-content: flex-end !important;
+	width: 100% !important;
+	border-top: 1px solid #e5e5e5;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 .cafy-conversation-modal .button {
@@ -469,9 +480,9 @@
 	}
 
 	.cafy-conversation-footer {
-		padding: 16px;
+		/*padding: 16px;
 		flex-direction: column;
-		gap: 12px;
+		gap: 12px;*/
 	}
 
 	.cafy-conversation-modal .button {
