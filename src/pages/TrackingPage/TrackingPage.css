@@ -86,11 +86,19 @@
 	min-width: 200px;
 }
 
+/* New priority header style with flex layout */
+.priority-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: var(--space-2);
+}
+
 .priority-name {
 	font-size: var(--font-size-27);
 	font-weight: 600;
 	color: var(--color-text-dark);
-	margin-bottom: var(--space-2);
+	margin-bottom: 0; /* Removed margin from priority name */
+	margin-right: var(--space-2);
 }
 
 .rating-instruction {

@@ -4,6 +4,7 @@ import { IoClose, IoTrashOutline } from 'react-icons/io5';
 import { IoIosArrowBack } from 'react-icons/io';
 import cafyLogo from '../../assets/CAFY_Online.png';
 import taxonomyData from '../../taxonomy.json';
+import InfoButton from '../InfoButton/InfoButton';
 
 const CafyConversation = ({ onClose, onSavePriorities }) => {
 	// State for managing conversation flow
@@ -47,6 +48,36 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 		selectedSubcategories,
 		selectedItems,
 	]);
+
+	// Helper function to get definition for a category, subcategory, or item
+	const getDefinitionById = (id, type) => {
+		if (type === 'category') {
+			const category = taxonomyData.categories.find((cat) => cat.id === id);
+			return category?.definition || 'Definition to formulate';
+		} else if (type === 'subcategory') {
+			const category = taxonomyData.categories.find(
+				(cat) => cat.id === currentCategory
+			);
+			if (category) {
+				const subcategory = category.subcategories.find((sub) => sub.id === id);
+				return subcategory?.definition || 'Definition to formulate';
+			}
+		} else if (type === 'item') {
+			const category = taxonomyData.categories.find(
+				(cat) => cat.id === currentCategory
+			);
+			if (category) {
+				const subcategory = category.subcategories.find(
+					(sub) => sub.id === currentSubcategory
+				);
+				if (subcategory) {
+					const item = subcategory.items.find((item) => item.id === id);
+					return item?.definition || 'Definition to formulate';
+				}
+			}
+		}
+		return 'Definition to formulate';
+	};
 
 	const handleOptionChange = (id, type, isMultiple = true) => {
 		if (type === 'category') {
@@ -480,7 +511,13 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 											value={category.id}
 										/>
 										<span className='cafy-checkbox'></span>
-										<span className='cafy-option-text'>{category.name}</span>
+										<div className='cafy-option-content'>
+											<span className='cafy-option-text'>{category.name}</span>
+											<InfoButton
+												definition={getDefinitionById(category.id, 'category')}
+												ariaLabel={`Show definition for ${category.name}`}
+											/>
+										</div>
 									</label>
 								))}
 							</div>
@@ -534,9 +571,18 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 												value={subcategory.id}
 											/>
 											<span className='cafy-checkbox'></span>
-											<span className='cafy-option-text'>
-												{subcategory.name}
-											</span>
+											<div className='cafy-option-content'>
+												<span className='cafy-option-text'>
+													{subcategory.name}
+												</span>
+												<InfoButton
+													definition={getDefinitionById(
+														subcategory.id,
+														'subcategory'
+													)}
+													ariaLabel={`Show definition for ${subcategory.name}`}
+												/>
+											</div>
 										</label>
 									))}
 							</div>
@@ -584,7 +630,13 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 													value={item.id}
 												/>
 												<span className='cafy-checkbox'></span>
-												<span className='cafy-option-text'>{item.name}</span>
+												<div className='cafy-option-content'>
+													<span className='cafy-option-text'>{item.name}</span>
+													<InfoButton
+														definition={getDefinitionById(item.id, 'item')}
+														ariaLabel={`Show definition for ${item.name}`}
+													/>
+												</div>
 											</label>
 										))}
 								</div>

@@ -179,6 +179,7 @@
 	margin-bottom: 20px;
 }
 
+/* Updated option styles for info button */
 .cafy-option {
 	display: flex;
 	align-items: center;
@@ -260,14 +261,53 @@
 	background-color: black;
 }
 
+/* New styles for option content with info button */
+.cafy-option-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex: 1;
+}
+
 .cafy-option-text {
 	font-size: 18px;
 	font-weight: 500;
 	line-height: 1.4;
+	flex: 1;
 }
 
 .cafy-option.selected .cafy-option-text {
 	color: black;
+}
+
+/* Style for the info button within options */
+.cafy-option .info-button-container {
+	margin-left: 16px;
+}
+
+.cafy-option .info-button {
+	color: var(--color-primary, #f26230);
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.cafy-option.selected .info-button {
+	color: #222;
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.cafy-option .info-button:hover {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+.cafy-option.selected .info-button:hover {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Position the definition popup for options */
+.cafy-option .definition-popup {
+	z-index: 1010;
+	right: 0;
+	width: 300px;
 }
 
 .cafy-options-group {
@@ -444,6 +484,10 @@
 	.cafy-remove-button {
 		border: 2px solid currentColor;
 	}
+
+	.info-button {
+		border: 2px solid currentColor;
+	}
 }
 
 /* Reduce motion for users who prefer it */
@@ -458,6 +502,10 @@
 
 	.cafy-progress-bar {
 		transition: none;
+	}
+
+	.definition-popup {
+		animation: none;
 	}
 }
 
@@ -544,5 +592,12 @@
 
 	.cafy-option-text {
 		font-size: 16px;
+	}
+
+	.cafy-option .info-button {
+		font-size: 20px;
+		width: 40px;
+		height: 40px;
+		padding: 10px;
 	}
 }

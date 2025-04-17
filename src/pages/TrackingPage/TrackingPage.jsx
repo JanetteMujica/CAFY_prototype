@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './TrackingPage.css';
 import taxonomy from '../../taxonomy.json';
+import InfoButton from '../../components/InfoButton/InfoButton';
 
 const TrackingPage = ({ onComplete }) => {
 	const location = useLocation();
@@ -140,6 +141,14 @@ const TrackingPage = ({ onComplete }) => {
 		return 'Add a personal note about your experience with this priority.';
 	};
 
+	// Helper function to get the definition for a priority
+	const getDefinitionForPriority = (priorityId) => {
+		const item = itemMap[priorityId];
+		return item && item.definition
+			? item.definition
+			: 'Definition to formulate';
+	};
+
 	// Emoji options for rating
 	const emojiOptions = [
 		{ value: 5, emoji: '😊', description: 'Very good' },
@@ -240,7 +249,13 @@ const TrackingPage = ({ onComplete }) => {
 							<div className='tracking-card' key={priority.id}>
 								<div className='card-header'>
 									<div className='title-container'>
-										<h2 className='priority-name'>{priority.title}</h2>
+										<div className='priority-header'>
+											<h2 className='priority-name'>{priority.title}</h2>
+											<InfoButton
+												definition={getDefinitionForPriority(priority.id)}
+												ariaLabel={`Show definition for ${priority.title}`}
+											/>
+										</div>
 										<p
 											className='rating-instruction'
 											id={`rating-instruction-${priority.id}`}

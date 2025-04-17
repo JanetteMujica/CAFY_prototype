@@ -3,8 +3,9 @@ CAFY_prototype
 ├─ dist
 │  ├─ assets
 │  │  ├─ CAFY_Online-CQmHrKPw.png
-│  │  ├─ index--8uQH59w.css
-│  │  └─ index-BBGCr4sW.js
+│  │  ├─ index-ct92QOrz.js
+│  │  ├─ index-D-1R6-kZ.css
+│  │  └─ watch-CTdS-nIS.png
 │  └─ index.html
 ├─ eslint.config.js
 ├─ index.html
@@ -29,6 +30,9 @@ CAFY_prototype
 │  │  ├─ Header
 │  │  │  ├─ Header.css
 │  │  │  └─ Header.jsx
+│  │  ├─ InfoButton
+│  │  │  ├─ InfoButton.css
+│  │  │  └─ InfoButton.jsx
 │  │  ├─ JournalSection
 │  │  │  ├─ JournalSection.css
 │  │  │  └─ JournalSection.jsx
@@ -38,9 +42,15 @@ CAFY_prototype
 │  ├─ index.css
 │  ├─ main.jsx
 │  ├─ pages
-│  │  └─ HomePage
-│  │     ├─ HomePage.css
-│  │     └─ HomePage.jsx
+│  │  ├─ HomePage
+│  │  │  ├─ HomePage.css
+│  │  │  └─ HomePage.jsx
+│  │  ├─ TrackingPage
+│  │  │  ├─ TrackingPage.css
+│  │  │  └─ TrackingPage.jsx
+│  │  └─ WikiPDPage
+│  │     ├─ WikiPDPage.css
+│  │     └─ WikiPDPage.jsx
 │  ├─ reset.css
 │  └─ taxonomy.json
 └─ vite.config.js

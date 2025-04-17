@@ -4,6 +4,7 @@ import './CareSection.css';
 import cafyLogo from '../../assets/CAFY_Online.png';
 import watchIcon from '../../assets/watch.png';
 import CafyConversation from '../CafyConversation/CafyConversation';
+import InfoButton from '../InfoButton/InfoButton';
 import taxonomy from '../../taxonomy.json';
 
 const CareSection = () => {
@@ -50,6 +51,14 @@ const CareSection = () => {
 			}
 		}
 	}, []);
+
+	// Helper function to get definition for a priority
+	const getDefinitionForPriority = (priorityId) => {
+		const item = itemMap[priorityId];
+		return item && item.definition
+			? item.definition
+			: 'Definition to formulate';
+	};
 
 	// Check if a priority ID should show the Fitbit button
 	const shouldShowFitbitButton = (priorityId) => {
@@ -216,11 +225,22 @@ const CareSection = () => {
 								className='priority-card'
 								key={priority.originalId || priority.id}
 							>
-								<h3 className='priority-title'>{priority.title}</h3>
-								<p className='priority-description'>
-									<strong>{priority.goalTitle}</strong>{' '}
-									{priority.goalDescription}
-								</p>
+								<div className='priority-title-container'>
+									<h3 className='priority-title'>{priority.title}</h3>
+									<InfoButton
+										definition={getDefinitionForPriority(priority.id)}
+										ariaLabel={`Show definition for ${priority.title}`}
+									/>
+								</div>
+								<section>
+									<p className='priority-description'>
+										<strong>{priority.goalTitle}</strong>{' '}
+									</p>
+									<p className='priority-description'>
+										{priority.goalDescription}
+									</p>
+								</section>
+
 								<div className='priority-buttons-container'>
 									<button
 										className='button primary-button priority-button'
@@ -246,6 +266,10 @@ const CareSection = () => {
 										</button>
 									)}
 								</div>
+								<p className='priority-description'>
+									I'll share care tips and resources to help you reach your
+									goal.
+								</p>
 							</div>
 						))}
 					</div>
