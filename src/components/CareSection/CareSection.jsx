@@ -1,21 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CareSection.css';
 import cafyLogo from '../../assets/CAFY_Online.png';
 import watchIcon from '../../assets/watch.png';
 import CafyConversation from '../CafyConversation/CafyConversation';
+import taxonomy from '../../taxonomy.json';
 
 const CareSection = () => {
 	const [showConversation, setShowConversation] = useState(false);
 	const [priorities, setPriorities] = useState([]);
 	const navigate = useNavigate();
 
-	// Subcategories that should display the Fitbit connection button
-	const fitbitSubcategories = ['sleep_disorders', 'staying_active'];
+	// Item IDs that should display the Fitbit connection button
+	const fitbitItemIds = ['insomnia', 'fatigue', 'exercise'];
 
-	// Check if a priority belongs to a subcategory that should show the Fitbit button
-	const shouldShowFitbitButton = (subcategoryId) => {
-		return fitbitSubcategories.includes(subcategoryId);
+	// Create a map of all items in the taxonomy for faster lookup
+	const [itemMap, setItemMap] = useState({});
+
+	// Initialize the item map from taxonomy when component mounts
+	useEffect(() => {
+		const map = {};
+
+		// Populate the map with all items from the taxonomy
+		taxonomy.categories.forEach((category) => {
+			category.subcategories.forEach((subcategory) => {
+				subcategory.items.forEach((item) => {
+					// Store the full item object keyed by ID
+					map[item.id] = {
+						...item,
+						categoryId: category.id,
+						subcategoryId: subcategory.id,
+					};
+				});
+			});
+		});
+
+		setItemMap(map);
+
+		// Load any existing priorities from localStorage
+		const storedPriorities = localStorage.getItem('allSelectedPriorities');
+		if (storedPriorities) {
+			try {
+				const parsedPriorities = JSON.parse(storedPriorities);
+				if (parsedPriorities.length > 0) {
+					setPriorities(parsedPriorities);
+				}
+			} catch (error) {
+				console.error('Error parsing stored priorities:', error);
+			}
+		}
+	}, []);
+
+	// Check if a priority ID should show the Fitbit button
+	const shouldShowFitbitButton = (priorityId) => {
+		// If we have a composite ID, extract the item ID part
+		let itemId = priorityId;
+		if (priorityId && priorityId.includes('_')) {
+			const parts = priorityId.split('_');
+			itemId = parts[parts.length - 1]; // Get the last part
+		}
+
+		return fitbitItemIds.includes(itemId);
 	};
 
 	const handleOpenConversation = () => {
@@ -27,23 +72,65 @@ const CareSection = () => {
 	};
 
 	const handleSavePriorities = (selectedPriorities) => {
+		console.log('Received priorities:', selectedPriorities);
+
 		// Transform the selected priorities into the format needed for display
-		const formattedPriorities = selectedPriorities.map((priority) => ({
-			id: priority.id,
-			title: priority.item,
-			description: generateDescription(priority.item),
-			category: priority.category,
-			subcategoryId: priority.subcategoryId, // Store the subcategory ID
-		}));
+		const formattedPriorities = selectedPriorities.map((priority) => {
+			// Extract the item ID
+			let actualItemId = priority.itemId;
+
+			// If itemId is not provided directly, extract it from the composite ID
+			if (!actualItemId && priority.id && priority.id.includes('_')) {
+				const parts = priority.id.split('_');
+				actualItemId = parts[parts.length - 1]; // Get the last part
+			} else if (!actualItemId) {
+				actualItemId = priority.id;
+			}
+
+			console.log(
+				`Processing priority "${priority.item}" with ID: ${actualItemId}`
+			);
+
+			// Look up item in our map
+			const item = itemMap[actualItemId];
+
+			// Default values if item not found
+			let goalTitle = 'Your goal is to focus on this priority.';
+			let goalDescription =
+				'Track this priority so I can provide you with care tips and resources.';
+
+			// Use the item's subgoal if available
+			if (item && item.subgoal && item.subgoal.length >= 2) {
+				console.log(`Found matching item: ${item.name}`);
+				goalTitle = item.subgoal[0];
+				goalDescription = item.subgoal[1];
+			} else {
+				console.log(`No matching item found for ID: ${actualItemId}`);
+			}
+
+			return {
+				// Store the actual item ID for consistent retrieval
+				id: actualItemId,
+				// Keep the original ID for reference
+				originalId: priority.id,
+				title: priority.item,
+				goalTitle: goalTitle,
+				goalDescription: goalDescription,
+				category: priority.category,
+				subcategoryId: priority.subcategoryId,
+			};
+		});
+
+		console.log('Formatted priorities:', formattedPriorities);
+
+		// Store all selected priorities in localStorage for tracking page
+		localStorage.setItem(
+			'allSelectedPriorities',
+			JSON.stringify(formattedPriorities)
+		);
 
 		setPriorities(formattedPriorities);
 		setShowConversation(false);
-	};
-
-	// Helper function to generate descriptions based on the priority title
-	const generateDescription = (title) => {
-		// Generate a personalized description based on the priority title
-		return `Your goal for the next few weeks will be to focus on ${title.toLowerCase()}. Track your ${title.toLowerCase()} so I can provide you with care tips and ressources.`;
 	};
 
 	const handleConnectFitbit = () => {
@@ -52,11 +139,13 @@ const CareSection = () => {
 		// Implementation would go here
 	};
 
-	// Navigate to tracking page with the selected priority
+	// Navigate to tracking page with ALL selected priorities
 	const handleTrackPriority = (priority) => {
+		// Even though we're navigating with just one priority,
+		// the tracking page will show all priorities from localStorage
 		navigate('/tracking', {
 			state: {
-				selectedPriorities: [priority],
+				selectedPriorities: priorities,
 			},
 		});
 	};
@@ -123,9 +212,15 @@ const CareSection = () => {
 					</div>
 					<div className='priorities-container'>
 						{priorities.map((priority) => (
-							<div className='priority-card' key={priority.id}>
+							<div
+								className='priority-card'
+								key={priority.originalId || priority.id}
+							>
 								<h3 className='priority-title'>{priority.title}</h3>
-								<p className='priority-description'>{priority.description}</p>
+								<p className='priority-description'>
+									<strong>{priority.goalTitle}</strong>{' '}
+									{priority.goalDescription}
+								</p>
 								<div className='priority-buttons-container'>
 									<button
 										className='button primary-button priority-button'
@@ -135,7 +230,7 @@ const CareSection = () => {
 										Track {priority.title.toLowerCase()}
 									</button>
 
-									{shouldShowFitbitButton(priority.subcategoryId) && (
+									{shouldShowFitbitButton(priority.id) && (
 										<button
 											className='button secondary-button fitbit-button'
 											onClick={handleConnectFitbit}

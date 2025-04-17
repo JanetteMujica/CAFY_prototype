@@ -290,7 +290,7 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 	const prepareFinalSelections = () => {
 		const selections = [];
 
-		Object.values(selectedItems).forEach((item) => {
+		Object.entries(selectedItems).forEach(([key, item]) => {
 			const { categoryId, subcategoryId, itemId } = item;
 
 			// Find the category, subcategory, and item in the taxonomy
@@ -305,7 +305,7 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 					const itemObj = subcategory.items.find((i) => i.id === itemId);
 					if (itemObj) {
 						selections.push({
-							id: `${categoryId}_${subcategoryId}_${itemId}`,
+							id: key, // Use the composite key format: categoryId_subcategoryId_itemId
 							category: category.name,
 							subcategory: subcategory.name,
 							item: itemObj.name,
@@ -318,6 +318,7 @@ const CafyConversation = ({ onClose, onSavePriorities }) => {
 			}
 		});
 
+		console.log('Prepared final selections:', selections);
 		setFinalSelections(selections);
 	};
 

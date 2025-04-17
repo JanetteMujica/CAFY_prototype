@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './TrackingPage.css';
+import taxonomy from '../../taxonomy.json';
 
 const TrackingPage = ({ onComplete }) => {
 	const location = useLocation();
@@ -13,24 +14,131 @@ const TrackingPage = ({ onComplete }) => {
 	// Initialize responses state
 	const [responses, setResponses] = useState([]);
 
-	// Set up selected priorities from location state
+	// Create a map of all items in the taxonomy for faster lookup
+	const [itemMap, setItemMap] = useState({});
+
+	// Initialize the item map from taxonomy
 	useEffect(() => {
+		const map = {};
+
+		// Populate the map with all items from the taxonomy
+		taxonomy.categories.forEach((category) => {
+			category.subcategories.forEach((subcategory) => {
+				subcategory.items.forEach((item) => {
+					// Store the full item object keyed by ID
+					map[item.id] = {
+						...item,
+						categoryId: category.id,
+						subcategoryId: subcategory.id,
+					};
+				});
+			});
+		});
+
+		setItemMap(map);
+	}, []);
+
+	// Load stored priorities from localStorage
+	const loadStoredPriorities = () => {
+		const storedPriorities = localStorage.getItem('allSelectedPriorities');
+		if (storedPriorities) {
+			try {
+				return JSON.parse(storedPriorities);
+			} catch (error) {
+				console.error('Error parsing stored priorities:', error);
+				return [];
+			}
+		}
+		return [];
+	};
+
+	// Set up selected priorities from location state or localStorage
+	useEffect(() => {
+		let prioritiesToUse = [];
+
 		if (location.state && location.state.selectedPriorities) {
-			setSelectedPriorities(location.state.selectedPriorities);
+			// If we have priorities in the location state
+			prioritiesToUse = location.state.selectedPriorities;
+
+			// Check if this is just one priority or an array
+			if (!Array.isArray(prioritiesToUse)) {
+				prioritiesToUse = [prioritiesToUse];
+			}
+
+			// Get all previously stored priorities
+			const allStoredPriorities = loadStoredPriorities();
+
+			// Add any new priorities that aren't already in storage
+			const updatedPriorities = [...allStoredPriorities];
+
+			prioritiesToUse.forEach((newPriority) => {
+				// Check if this priority already exists in the stored priorities
+				const exists = updatedPriorities.some((p) => p.id === newPriority.id);
+				if (!exists) {
+					updatedPriorities.push(newPriority);
+				}
+			});
+
+			// Save all priorities to localStorage
+			localStorage.setItem(
+				'allSelectedPriorities',
+				JSON.stringify(updatedPriorities)
+			);
+
+			// Use all priorities for display
+			prioritiesToUse = updatedPriorities;
+		} else {
+			// If no priorities in location state, use all stored priorities
+			prioritiesToUse = loadStoredPriorities();
+		}
+
+		// If we have priorities to use
+		if (prioritiesToUse.length > 0) {
+			console.log('Using priorities:', prioritiesToUse);
+			setSelectedPriorities(prioritiesToUse);
 
 			// Initialize responses for each priority
 			setResponses(
-				location.state.selectedPriorities.map((priority) => ({
+				prioritiesToUse.map((priority) => ({
 					priorityId: priority.id,
 					rating: null,
 					comment: '',
 				}))
 			);
 		} else {
-			// Redirect back to home if no priorities were passed
+			// Redirect back to home if no priorities were found
 			navigate('/');
 		}
 	}, [location, navigate]);
+
+	// Helper function to get the tracking instruction for a priority
+	const getTrackingInstruction = (priorityId) => {
+		// Look up the item in our map
+		const item = itemMap[priorityId];
+
+		// If found and has subgoal, return the second part (tracking instruction)
+		if (item && item.subgoal && item.subgoal.length >= 2) {
+			// Get the full instruction
+			let instruction = item.subgoal[1];
+
+			// Remove the last part that says "I'll share care tips and resources to help you reach your goal."
+			instruction = instruction.replace(
+				/\s*I'll share care tips and resources to help you reach your goal\.\s*$/,
+				''
+			);
+
+			// Replace "Track with a short survey" with "Track with the above survey"
+			instruction = instruction.replace(
+				'Track with a short survey',
+				'Track with the above survey'
+			);
+
+			return instruction;
+		}
+
+		// Default instruction if not found
+		return 'Add a personal note about your experience with this priority.';
+	};
 
 	// Emoji options for rating
 	const emojiOptions = [
@@ -183,12 +291,12 @@ const TrackingPage = ({ onComplete }) => {
 										htmlFor={`comment-${priority.id}`}
 										className='comment-label'
 									>
-										Add a personal note (optional):
+										{getTrackingInstruction(priority.id)}
 									</label>
 									<textarea
 										id={`comment-${priority.id}`}
 										className='comment-input'
-										placeholder='Your thoughts, observations, or questions...'
+										placeholder='Optional: your thoughts, observations, or questions...'
 										value={responses[priorityIndex]?.comment || ''}
 										onChange={(e) =>
 											handleCommentChange(priorityIndex, e.target.value)

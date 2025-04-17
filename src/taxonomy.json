@@ -12,19 +12,39 @@
 					"items": [
 						{
 							"id": "tremor",
-							"name": "Tremor"
+							"name": "Tremor",
+							"subgoal": [
+								"Your goal is to better understand and manage your tremor.",
+								"Track with a short survey and take time to record when your tremor occurs, what triggers it, and what helps reduce it. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "rigidity",
-							"name": "Rigidity"
+							"name": "Rigidity",
+							"subgoal": [
+								"Your goal is to find ways to ease muscle stiffness and rigidity.",
+								"Track with a short survey and take time to record when rigidity affects you most, and what activities or treatments provide relief. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "bradykinesia",
-							"name": "Bradykinesia (slow movement)"
+							"name": "Bradykinesia (slow movement)",
+							"subgoal": [
+								"Your goal is to cope with and improve slow movement (bradykinesia).",
+								"Track with a short survey and take time to record which daily activities are most affected, and what strategies help you move more effectively. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "postural_gait",
-							"name": "Postural/gait impairment"
+							"name": "Postural/gait impairment",
+							"subgoal": [
+								"Your goal is to maintain better balance and improve your walking.",
+								"Track with a short survey and take time to record any specific walking or balance challenges, and what helps you feel more stable. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						}
 					]
 				},
@@ -34,19 +54,48 @@
 					"items": [
 						{
 							"id": "orthostatic_hypotension",
-							"name": "Orthostatic hypotension"
+							"name": "Orthostatic hypotension",
+							"subgoal": [
+								"Your goal is to manage blood pressure changes when standing up.",
+								"Track with a short survey and take time to record when dizziness occurs, what triggers it, and what helps prevent it. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "sweating_problems",
-							"name": "Sweating Problems"
+							"name": "Sweating Problems",
+							"subgoal": [
+								"Your goal is to better manage and cope with sweating changes.",
+								"Track with a short survey and take time to record your sweating patterns, what triggers excessive or reduced sweating, and what brings relief. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "pain",
-							"name": "Pain"
+							"name": "Pain",
+							"subgoal": [
+								"Your goal is to reduce pain and improve your comfort.",
+								"Track with a short survey and take time to record where and when you experience pain, what triggers it, and what brings relief. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "skin_problems",
-							"name": "Skin Problems"
+							"name": "Skin Problems",
+							"subgoal": [
+								"Your goal is to manage skin changes and maintain healthy skin.",
+								"Track with a short survey and take time to record any skin issues you notice, when they occur, and what helps improve them. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
+						},
+						{
+							"id": "sexual_dysfunction",
+							"name": "Sexual dysfunction",
+							"subgoal": [
+								"Your goal is to address changes in sexual function and maintain intimacy.",
+								"Track with a short survey and take time to record any concerns you have about intimacy or sexual function. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						}
 					]
 				},
@@ -56,23 +105,54 @@
 					"items": [
 						{
 							"id": "eating_problems",
-							"name": "Eating Problems"
+							"name": "Eating Problems",
+							"subgoal": [
+								"Your goal is to make eating more comfortable and enjoyable.",
+								"Track with a short survey and take time to record any difficulties with eating, what foods are challenging, and what helps. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "saliva_control",
-							"name": "Saliva control"
+							"name": "Saliva control",
+							"subgoal": [
+								"Your goal is to better manage saliva and drooling issues.",
+								"Track with a short survey and take time to record when saliva control is most difficult and what strategies help you. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "swallowing_problems",
-							"name": "Swallowing Problems"
-						},
+							"name": "Swallowing Problems",
+							"subgoal": [
+								"Your goal is to swallow safely and make eating more comfortable.",
+								"Track with a short survey and take time to record which foods or drinks are difficult to swallow, and what techniques help. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
+						}
+					]
+				},
+				{
+					"id": "bowel_bladder",
+					"name": "Bowel & Bladder",
+					"items": [
 						{
 							"id": "constipation",
-							"name": "Constipation"
+							"name": "Constipation",
+							"subgoal": [
+								"Your goal is to improve bowel regularity and comfort.",
+								"Track with a short survey and take time to record your bowel patterns, what makes constipation worse, and what helps relieve it. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "urinary_issues",
-							"name": "Urinary Issues"
+							"name": "Urinary Issues",
+							"subgoal": [
+								"Your goal is to better manage bladder function and urgency.",
+								"Track with a short survey and take time to record any urinary symptoms you experience, when they occur, and what helps you manage them. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						}
 					]
 				},
@@ -82,19 +162,39 @@
 					"items": [
 						{
 							"id": "insomnia",
-							"name": "Insomnia"
+							"name": "Insomnia",
+							"subgoal": [
+								"Your goal is to improve your sleep quality and duration.",
+								"Track with a short survey and take time to record your sleep patterns, what disrupts your sleep, and what helps you sleep better. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "fatigue",
-							"name": "Fatigue"
+							"name": "Fatigue",
+							"subgoal": [
+								"Your goal is to manage fatigue and maintain your energy.",
+								"Track with a short survey and take time to record when you feel most tired, what activities drain your energy, and what helps you feel refreshed. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "daytime_sleepiness",
-							"name": "Daytime sleepiness"
+							"name": "Daytime sleepiness",
+							"subgoal": [
+								"Your goal is to stay more alert during the day.",
+								"Track with a short survey and take time to record when sleepiness occurs, what triggers it, and what helps you stay awake and engaged. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "restless_legs",
-							"name": "Restless Legs"
+							"name": "Restless Legs",
+							"subgoal": [
+								"Your goal is to reduce restless leg sensations for better comfort and sleep.",
+								"Track with a short survey and take time to record when restless leg symptoms occur and what activities or treatments provide relief. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						}
 					]
 				},
@@ -104,15 +204,39 @@
 					"items": [
 						{
 							"id": "vision_problems",
-							"name": "Vision Problems"
+							"name": "Vision Problems",
+							"subgoal": [
+								"Your goal is to address vision changes and maintain visual function.",
+								"Track with a short survey and take time to record any vision issues you notice, when they occur, and how they affect your daily activities. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "loss_of_smell",
-							"name": "Loss of smell"
+							"name": "Loss of smell",
+							"subgoal": [
+								"Your goal is to cope with changes in your sense of smell and taste.",
+								"Track with a short survey and take time to record how smell and taste changes affect you, particularly with eating and safety concerns. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "abnormal_sensations",
-							"name": "Abnormal sensations"
+							"name": "Abnormal sensations",
+							"subgoal": [
+								"Your goal is to better understand and manage unusual sensations in your body.",
+								"Track with a short survey and take time to record where and when you experience abnormal sensations, and what helps relieve them. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
+						},
+						{
+							"id": "speech_problems",
+							"name": "Speech problems",
+							"subgoal": [
+								"Your goal is to communicate more clearly and confidently.",
+								"Track with a short survey and take time to record when speech is most difficult, what situations are challenging, and what techniques help. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						}
 					]
 				}
@@ -125,32 +249,53 @@
 			"question": "Are you feeling sad, anxious, or lack energy to do things? Or, do you forget things easily? What would you like to focus first?",
 			"subcategories": [
 				{
-					"id": "mood_emotion",
-					"name": "Mood & Emotion",
+					"id": "feeling_worried_anxious",
+					"name": "Feeling worried or anxious",
 					"items": [
 						{
-							"id": "feeling_worried",
-							"name": "Feeling worried or anxious"
-						},
-						{
 							"id": "anxiety",
-							"name": "Anxiety"
+							"name": "Anxiety",
+							"subgoal": [
+								"Your goal is to reduce anxiety and worry in your daily life.",
+								"Track with a short survey and take time to record when you feel anxious, what triggers these feelings, and what helps you feel calmer. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "apathy",
-							"name": "Apathy"
+							"name": "Apathy",
+							"subgoal": [
+								"Your goal is to reconnect with activities and interests that matter to you.",
+								"Track with a short survey and take time to record when you notice a lack of motivation, what activities you miss enjoying, and what sparks your interest. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "panic_attack",
-							"name": "Panic Attack"
+							"name": "Panic Attack",
+							"subgoal": [
+								"Your goal is to better manage panic attacks when they occur.",
+								"Track with a short survey and take time to record what triggers panic attacks, what physical sensations you experience, and what helps you through them. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "impulse_control",
-							"name": "Impulse control"
+							"name": "Impulse control",
+							"subgoal": [
+								"Your goal is to feel more in control of your impulses and decisions.",
+								"Track with a short survey and take time to record situations where impulse control is difficult, and what strategies help you pause and think. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "depression",
-							"name": "Depression"
+							"name": "Depression",
+							"subgoal": [
+								"Your goal is to improve your mood and sense of well-being.",
+								"Track with a short survey and take time to record changes in your mood, what situations affect your mood, and what activities bring you joy. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						}
 					]
 				},
@@ -160,15 +305,30 @@
 					"items": [
 						{
 							"id": "memory_problems",
-							"name": "Memory Problems"
+							"name": "Memory Problems",
+							"subgoal": [
+								"Your goal is to manage memory challenges in everyday life.",
+								"Track with a short survey and take time to record what types of things are hard to remember, what memory strategies work for you, and how memory issues affect your daily activities. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "cognitive_changes",
-							"name": "Cognitive Changes"
+							"name": "Cognitive Changes",
+							"subgoal": [
+								"Your goal is to adapt to changes in your thinking and problem-solving.",
+								"Track with a short survey and take time to record which cognitive tasks are more challenging, what strategies help you think more clearly, and how these changes affect your daily life. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "difficulty_focusing",
-							"name": "Difficulty Focusing"
+							"name": "Difficulty Focusing",
+							"subgoal": [
+								"Your goal is to improve your concentration and attention.",
+								"Track with a short survey and take time to record when focus is most difficult, what distractions affect you most, and what helps you stay focused. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						}
 					]
 				},
@@ -178,11 +338,21 @@
 					"items": [
 						{
 							"id": "hallucinations",
-							"name": "Hallucinations"
+							"name": "Hallucinations",
+							"subgoal": [
+								"Your goal is to better understand and manage hallucinations when they occur.",
+								"Track with a short survey and take time to record what you see or hear, when it happens, and how you respond to these experiences. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "delusions",
-							"name": "Delusions / Illusions"
+							"name": "Delusions / Illusions",
+							"subgoal": [
+								"Your goal is to distinguish between what's real and what may be a misperception.",
+								"Track with a short survey and take time to record thoughts or beliefs that others find unusual, how these thoughts affect you, and what helps you stay grounded. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						}
 					]
 				}
@@ -200,11 +370,21 @@
 					"items": [
 						{
 							"id": "exercise",
-							"name": "Physical activity"
+							"name": "Physical activity",
+							"subgoal": [
+								"Your goal is to stay physically active in ways that work for you.",
+								"Track with a short survey and take time to record how you feel when active, what motivates you, and any challenges you face. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "hobbies",
-							"name": "Hobbies"
+							"name": "Hobbies",
+							"subgoal": [
+								"Your goal is to keep doing the hobbies you enjoy.",
+								"Track with a short survey and take time to record how they make you feel, what motivates you, and what might get in the way. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						}
 					]
 				},
@@ -214,15 +394,30 @@
 					"items": [
 						{
 							"id": "living_alone",
-							"name": "Living Alone"
+							"name": "Living Alone",
+							"subgoal": [
+								"Your goal is to feel confident and supported while living alone.",
+								"Track with a short survey and take time to record your experiences, challenges, and what helps you feel connected. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
-							"id": "speech_communication",
-							"name": "Speech & Communication"
+							"id": "dinner_outing",
+							"name": "Going out to dinner",
+							"subgoal": [
+								"Your goal is to enjoy going out for meals with more comfort and confidence.",
+								"Track with a short survey and take time to record any challenges you face. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
-							"id": "intimacy_sexuality",
-							"name": "Intimacy/Sexuality"
+							"id": "travelling",
+							"name": "Travelling with Parkinson's",
+							"subgoal": [
+								"Your goal is to feel more prepared and at ease when traveling.",
+								"Track with a short survey and take time to record your concerns, challenges, or past travel experiences. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						}
 					]
 				},
@@ -232,11 +427,21 @@
 					"items": [
 						{
 							"id": "weight",
-							"name": "Weight"
+							"name": "Weight",
+							"subgoal": [
+								"Your goal is to better understand and manage your weight.",
+								"Track with a short survey and take time to record how you feel in your body, and any changes you notice. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
-							"id": "nutrition_advice",
-							"name": "Nutrition Advices"
+							"id": "nutrition",
+							"name": "Nutrition",
+							"subgoal": [
+								"Your goal is to make food choices that support your well-being.",
+								"Track with a short survey and take time to record what you eat, how you feel, and any difficulties you face. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						}
 					]
 				},
@@ -245,20 +450,22 @@
 					"name": "Managing Daily Tasks",
 					"items": [
 						{
-							"id": "reorganizing_home",
-							"name": "Reorganizing Home (Home safety)"
-						},
-						{
-							"id": "assistive_tools",
-							"name": "Using Assistive Tools"
-						},
-						{
-							"id": "adapting_routines",
-							"name": "Adapting Routines (e.i., bathing, dressing, cooking)"
+							"id": "daily_living",
+							"name": "Daily living activities",
+							"subgoal": [
+								"Your goal is to make daily tasks easier and more comfortable.",
+								"Track with a short survey and take time to record what feels challenging and what helps you. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "physical_challenges",
-							"name": "Managing daily physical challenges (e.i., getting out of chair)"
+							"name": "Daily physical challenges",
+							"subgoal": [
+								"Your goal is to manage the physical challenges you face each day.",
+								"Track with a short survey and take time to record what's hard, what helps, and how you adapt. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						}
 					]
 				},
@@ -267,41 +474,22 @@
 					"name": "Medication",
 					"items": [
 						{
-							"id": "managing_medication",
-							"name": "Managing medication"
+							"id": "medication_adherence",
+							"name": "Medication adherence",
+							"subgoal": [
+								"Your goal is to stay consistent and confident with your medication routine.",
+								"Track with a short survey and take time to record when and how you take your medication and how it fits into your life. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						},
 						{
 							"id": "drug_side_effects",
-							"name": "Common drug side-effect & their management"
-						},
-						{
-							"id": "new_treatments",
-							"name": "Information about new treatment (e.i., DBS)"
-						}
-					]
-				}
-			]
-		},
-		{
-			"id": "common_self-care",
-			"name": "Common Self-Care Habits",
-			"goal": "I am not sure - help me with common self-care habits",
-			"subcategories": [
-				{
-					"id": "daily_self_care",
-					"name": "Daily Self-Care Activities",
-					"items": [
-						{
-							"id": "regular_exercise",
-							"name": "Regular Exercise"
-						},
-						{
-							"id": "medication_adherence",
-							"name": "Medication Adherence"
-						},
-						{
-							"id": "adequate_sleep",
-							"name": "Adequate Sleep"
+							"name": "Common drug side-effect & their management",
+							"subgoal": [
+								"Your goal is to better understand and manage any side effects from your medication.",
+								"Track with a short survey and take time to record which side effects you experience and how you manage them. I'll share care tips and resources to help you reach your goal."
+							],
+							"definition": ""
 						}
 					]
 				}

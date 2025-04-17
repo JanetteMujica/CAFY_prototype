@@ -5,9 +5,10 @@ import './Sidebar.css';
 const Sidebar = () => {
 	const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
+	// Updated navigation items - Tracking is now active
 	const navItems = [
 		{ name: 'Home', path: '/', active: true },
-		{ name: 'Tracking', path: '/tracking', active: false },
+		{ name: 'Tracking', path: '/tracking', active: true }, // Changed to active
 		{ name: 'History', path: '/history', active: false },
 		{ name: 'Journal', path: '/journal', active: false },
 		{ name: 'Care Team', path: '/care-team', active: false },
@@ -67,6 +68,8 @@ const Sidebar = () => {
 								onClick={closeMobileNav}
 								style={{
 									pointerEvents: item.active ? 'auto' : 'none',
+									opacity: item.active ? 1 : 0.5, // Visual indicator of disabled state
+									cursor: item.active ? 'pointer' : 'not-allowed',
 								}}
 								role='menuitem'
 								tabIndex={item.active ? 0 : -1}
