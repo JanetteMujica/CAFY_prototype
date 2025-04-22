@@ -3,8 +3,8 @@ CAFY_prototype
 ├─ dist
 │  ├─ assets
 │  │  ├─ CAFY_Online-CQmHrKPw.png
-│  │  ├─ index-ct92QOrz.js
-│  │  ├─ index-D-1R6-kZ.css
+│  │  ├─ index-D9Vn62So.css
+│  │  ├─ index-DEf1nU-c.js
 │  │  └─ watch-CTdS-nIS.png
 │  └─ index.html
 ├─ eslint.config.js
@@ -36,9 +36,12 @@ CAFY_prototype
 │  │  ├─ JournalSection
 │  │  │  ├─ JournalSection.css
 │  │  │  └─ JournalSection.jsx
-│  │  └─ Sidebar
-│  │     ├─ Sidebar.css
-│  │     └─ Sidebar.jsx
+│  │  ├─ Sidebar
+│  │  │  ├─ Sidebar.css
+│  │  │  └─ Sidebar.jsx
+│  │  └─ WikiPDTree
+│  │     ├─ WikiPDTree.css
+│  │     └─ WikiPDTree.jsx
 │  ├─ index.css
 │  ├─ main.jsx
 │  ├─ pages
@@ -52,5 +55,7 @@ CAFY_prototype
 │  │     ├─ WikiPDPage.css
 │  │     └─ WikiPDPage.jsx
 │  ├─ reset.css
+│  ├─ services
+│  │  └─ WikiPDService.js
 │  └─ taxonomy.json
 └─ vite.config.js

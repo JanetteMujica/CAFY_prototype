@@ -5,10 +5,11 @@ import './Sidebar.css';
 const Sidebar = () => {
 	const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-	// Updated navigation items - Tracking is now active
+	// Updated navigation items - Added WikiPD as active
 	const navItems = [
 		{ name: 'Home', path: '/', active: true },
-		{ name: 'Tracking', path: '/tracking', active: true }, // Changed to active
+		{ name: 'Tracking', path: '/tracking', active: true },
+		{ name: 'WikiPD', path: '/wikipd', active: true }, // Added WikiPD
 		{ name: 'History', path: '/history', active: false },
 		{ name: 'Journal', path: '/journal', active: false },
 		{ name: 'Care Team', path: '/care-team', active: false },

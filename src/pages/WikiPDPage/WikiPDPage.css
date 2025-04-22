@@ -1,0 +1,550 @@
+.wikipd-page {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: var(--space-4);
+	position: relative;
+}
+
+.wikipd-notification {
+	position: fixed;
+	top: 80px;
+	right: 20px;
+	padding: var(--space-3) var(--space-4);
+	border-radius: 8px;
+	font-weight: 600;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	z-index: 100;
+	transition: transform 0.3s, opacity 0.3s;
+	animation: slideIn 0.3s forwards;
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+.wikipd-notification.success {
+	background-color: #4caf50;
+	color: white;
+}
+
+.wikipd-notification.error {
+	background-color: #f44336;
+	color: white;
+}
+
+.wikipd-top-navigation {
+	background-color: var(--color-bg-alt);
+	padding: var(--space-3) var(--space-4);
+	border-radius: 8px;
+	margin-bottom: var(--space-4);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wikipd-breadcrumbs {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-2);
+	font-size: var(--font-size-16);
+}
+
+.wikipd-breadcrumbs a {
+	color: var(--color-blue-dark);
+	text-decoration: none;
+	transition: color 0.2s;
+}
+
+.wikipd-breadcrumbs a:hover {
+	color: var(--color-primary);
+	text-decoration: underline;
+}
+
+.breadcrumb-separator {
+	color: var(--color-text-dark);
+	opacity: 0.5;
+}
+
+.current-page {
+	font-weight: 600;
+	color: var(--color-text-dark);
+}
+
+.wikipd-content {
+	background-color: var(--color-bg-alt);
+	border-radius: 10px;
+	padding: var(--space-5);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wikipd-title {
+	font-size: var(--font-size-32);
+	color: var(--color-text-dark);
+	margin-bottom: var(--space-4);
+	font-weight: 700;
+	line-height: 1.3;
+	border-bottom: 2px solid var(--color-primary);
+	padding-bottom: var(--space-2);
+}
+
+.wikipd-description {
+	font-size: var(--font-size-19);
+	line-height: 1.6;
+	margin-bottom: var(--space-5);
+}
+
+.wikipd-view-controls {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: var(--space-4);
+	background-color: var(--color-primary-bg);
+	padding: var(--space-3);
+	border-radius: 8px;
+	flex-wrap: wrap;
+	gap: var(--space-3);
+}
+
+.wikipd-zoom-controls {
+	display: flex;
+	gap: var(--space-2);
+}
+
+.wikipd-admin-controls {
+	display: flex;
+	gap: var(--space-3);
+	flex-wrap: wrap;
+}
+
+.wikipd-section {
+	margin-bottom: var(--space-5);
+}
+
+.wikipd-section-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: var(--space-3);
+}
+
+.wikipd-section-title {
+	font-size: var(--font-size-24);
+	font-weight: 600;
+	color: var(--color-text-dark);
+	margin-bottom: var(--space-3);
+}
+
+.wikipd-section-content {
+	font-size: var(--font-size-19);
+	line-height: 1.6;
+	color: var(--color-text-dark);
+}
+
+.wikipd-subcategories,
+.wikipd-items {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: var(--space-4);
+}
+
+.wikipd-card {
+	background-color: var(--color-primary-bg);
+	border-radius: 8px;
+	padding: var(--space-4);
+	transition: all 0.2s ease;
+	border-left: 4px solid var(--color-primary);
+	height: 100%;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	display: flex;
+	flex-direction: column;
+}
+
+.wikipd-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wikipd-card-title {
+	font-size: var(--font-size-19);
+	font-weight: 600;
+	margin: 0;
+	margin-bottom: var(--space-2);
+}
+
+.wikipd-card-title a {
+	color: var(--color-text-dark);
+	text-decoration: none;
+	display: block;
+	transition: color 0.2s;
+}
+
+.wikipd-card-title a:hover {
+	color: var(--color-primary);
+}
+
+.wikipd-card-preview {
+	font-size: var(--font-size-16);
+	color: var(--color-text-dark);
+	opacity: 0.8;
+	margin: 0;
+	flex-grow: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* Button styles */
+.wikipd-edit-button {
+	background-color: var(--color-bg-dark);
+	color: var(--color-text-light);
+	border: none;
+	border-radius: 6px;
+	padding: var(--space-2) var(--space-3);
+	font-size: var(--font-size-16);
+	cursor: pointer;
+	transition: background-color 0.2s;
+	min-height: 36px;
+}
+
+.wikipd-edit-button:hover:not(:disabled) {
+	background-color: var(--color-primary);
+	transform: translateY(-2px);
+}
+
+.view-toggle-button {
+	background-color: var(--color-blue-dark);
+	color: var(--color-text-light);
+	border: none;
+	border-radius: 6px;
+	padding: var(--space-2) var(--space-3);
+	font-size: var(--font-size-16);
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	min-height: 36px;
+}
+
+.view-toggle-button:hover {
+	background-color: var(--color-blue-light);
+	color: var(--color-text-dark);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.reset-button {
+	background-color: #f44336;
+	color: var(--color-text-light);
+	border: none;
+	border-radius: 6px;
+	padding: var(--space-2) var(--space-3);
+	font-size: var(--font-size-16);
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	min-height: 36px;
+}
+
+.reset-button:hover {
+	background-color: #d32f2f;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Edit container */
+.wikipd-edit-container {
+	margin-top: var(--space-3);
+}
+
+.wikipd-edit-textarea {
+	width: 100%;
+	padding: var(--space-3);
+	font-size: var(--font-size-19);
+	border: 2px solid #ccc;
+	border-radius: 8px;
+	margin-bottom: var(--space-3);
+	font-family: inherit;
+	resize: vertical;
+	min-height: 100px;
+	line-height: 1.6;
+}
+
+.wikipd-edit-textarea:focus {
+	outline: none;
+	border-color: var(--color-primary);
+	box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.wikipd-edit-actions {
+	display: flex;
+	gap: var(--space-3);
+}
+
+.wikipd-save-button,
+.wikipd-cancel-button {
+	padding: var(--space-2) var(--space-4);
+	border: none;
+	border-radius: 6px;
+	font-size: var(--font-size-16);
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	min-height: 44px;
+}
+
+.wikipd-save-button {
+	background-color: var(--color-primary);
+	color: var(--color-text-light);
+}
+
+.wikipd-save-button:hover:not(:disabled) {
+	background-color: #e05825;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.wikipd-cancel-button {
+	background-color: var(--color-bg-dark);
+	color: var(--color-text-light);
+}
+
+.wikipd-cancel-button:hover:not(:disabled) {
+	background-color: #333;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Disabled state */
+button:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+/* Zoom buttons */
+.zoom-button {
+	background-color: var(--color-bg-dark);
+	color: var(--color-text-light);
+	border: none;
+	border-radius: 4px;
+	width: 36px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: var(--font-size-19);
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.zoom-button:hover {
+	background-color: var(--color-primary);
+}
+
+.reset-zoom {
+	width: auto;
+	padding: 0 var(--space-2);
+	font-size: var(--font-size-16);
+}
+
+/* List view styles */
+.taxonomy-list-container {
+	margin-top: var(--space-4);
+	max-height: 700px;
+	overflow-y: auto;
+	padding-right: var(--space-3);
+}
+
+.taxonomy-categories {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-5);
+}
+
+.taxonomy-category {
+	border-bottom: 1px solid var(--color-primary-light);
+	padding-bottom: var(--space-4);
+}
+
+.taxonomy-category:last-child {
+	border-bottom: none;
+}
+
+.category-title {
+	font-size: var(--font-size-27);
+	font-weight: 700;
+	margin-bottom: var(--space-3);
+	color: var(--color-blue-dark);
+}
+
+.category-title a {
+	text-decoration: none;
+	color: inherit;
+	transition: color 0.2s;
+}
+
+.category-title a:hover {
+	color: var(--color-primary);
+}
+
+.taxonomy-subcategories {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: var(--space-4);
+	margin-left: var(--space-4);
+}
+
+.subcategory-title {
+	font-size: var(--font-size-19);
+	font-weight: 600;
+	margin-bottom: var(--space-2);
+	color: var(--color-text-dark);
+}
+
+.subcategory-title a {
+	text-decoration: none;
+	color: inherit;
+	transition: color 0.2s;
+}
+
+.subcategory-title a:hover {
+	color: var(--color-primary);
+}
+
+.taxonomy-items {
+	list-style-type: none;
+	padding-left: var(--space-3);
+	margin-bottom: var(--space-3);
+}
+
+.taxonomy-item {
+	margin-bottom: var(--space-2);
+	line-height: 1.6;
+}
+
+.taxonomy-item a {
+	text-decoration: none;
+	color: var(--color-text-dark);
+	font-size: var(--font-size-16);
+	transition: color 0.2s;
+	display: block;
+	position: relative;
+	padding-left: var(--space-3);
+}
+
+.taxonomy-item a::before {
+	content: '•';
+	position: absolute;
+	left: 0;
+	color: var(--color-primary);
+}
+
+.taxonomy-item a:hover {
+	color: var(--color-primary);
+}
+
+/* Error state */
+.wikipd-error {
+	padding: var(--space-5);
+	text-align: center;
+	color: var(--color-error);
+	font-size: var(--font-size-24);
+	font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.wikipd-page {
+		padding: var(--space-3);
+	}
+
+	.wikipd-content {
+		padding: var(--space-3);
+	}
+
+	.wikipd-title {
+		font-size: var(--font-size-27);
+	}
+
+	.wikipd-section-title {
+		font-size: var(--font-size-24);
+	}
+
+	.wikipd-subcategories,
+	.wikipd-items {
+		grid-template-columns: 1fr;
+	}
+
+	.taxonomy-subcategories {
+		grid-template-columns: 1fr;
+	}
+
+	.wikipd-view-controls {
+		flex-direction: column;
+		gap: var(--space-2);
+		align-items: flex-start;
+	}
+
+	.wikipd-admin-controls {
+		width: 100%;
+	}
+
+	.view-toggle-button,
+	.reset-button {
+		flex: 1;
+	}
+
+	.wikipd-notification {
+		width: 90%;
+		left: 5%;
+		right: 5%;
+	}
+}
+
+/* Accessibility improvements for Parkinson's disease */
+button,
+a {
+	min-height: 44px;
+	min-width: 44px;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+	.wikipd-card {
+		border: 2px solid currentColor;
+	}
+
+	.wikipd-edit-button,
+	.wikipd-save-button,
+	.wikipd-cancel-button,
+	.zoom-button,
+	.view-toggle-button,
+	.reset-button {
+		border: 2px solid currentColor;
+	}
+
+	.wikipd-notification {
+		border: 2px solid currentColor;
+	}
+}
+
+/* Reduce motion for users who might have issues with movement */
+@media (prefers-reduced-motion: reduce) {
+	.wikipd-card:hover,
+	.wikipd-edit-button:hover,
+	.wikipd-save-button:hover,
+	.wikipd-cancel-button:hover,
+	.view-toggle-button:hover,
+	.reset-button:hover {
+		transform: none;
+		transition: none;
+	}
+
+	.wikipd-notification {
+		animation: none;
+		transition: none;
+	}
+}

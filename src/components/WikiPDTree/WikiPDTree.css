@@ -1,0 +1,133 @@
+.wikipd-tree-visualization {
+	width: 100%;
+	height: 800px;
+	background-color: var(--color-bg-main);
+	border-radius: 10px;
+	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.tree-container {
+	width: 100%;
+	height: 100%;
+}
+
+/* Custom node styles */
+.wikipd-flow-node {
+	padding: 10px 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	transition: all 0.2s ease;
+	background-color: white;
+	border: 2px solid transparent;
+	min-width: 120px;
+	max-width: 250px;
+}
+
+.wikipd-flow-node:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.wikipd-flow-node.root {
+	background-color: var(--color-primary);
+	border-color: var(--color-primary);
+	color: white;
+	font-weight: 700;
+	min-width: 140px;
+}
+
+.wikipd-flow-node.category {
+	background-color: var(--color-blue-dark);
+	border-color: var(--color-blue-dark);
+	color: white;
+	font-weight: 600;
+	min-width: 160px;
+}
+
+.wikipd-flow-node.subcategory {
+	background-color: var(--color-blue-light);
+	border-color: var(--color-blue-light);
+	color: black;
+	font-weight: 500;
+	min-width: 180px;
+}
+
+.wikipd-flow-node.item {
+	background-color: var(--color-bg-alt);
+	border-color: var(--color-primary);
+	color: var(--color-text-dark);
+	min-width: 200px;
+}
+
+.node-content {
+	text-align: center;
+	padding: 5px;
+}
+
+.node-label {
+	font-size: 14px;
+	line-height: 1.4;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	hyphens: auto;
+}
+
+.react-flow__handle {
+	opacity: 0 !important;
+}
+
+/* Make edges visible */
+.react-flow__edge-path {
+	stroke: var(--color-bg-dark) !important;
+	stroke-width: 2px !important;
+	opacity: 1 !important;
+}
+
+/* Fix arrow color and opacity */
+.react-flow__arrowhead path {
+	fill: var(--color-bg-dark) !important;
+	stroke: var(--color-bg-dark) !important;
+	fill-opacity: 1 !important;
+	stroke-opacity: 1 !important;
+}
+
+/* Additional arrow fixes for all possible arrow elements */
+.react-flow__arrowhead polygon {
+	fill: var(--color-bg-dark) !important;
+	stroke: var(--color-bg-dark) !important;
+	fill-opacity: 1 !important;
+	stroke-opacity: 1 !important;
+}
+
+.react-flow__arrowhead polyline {
+	stroke: var(--color-bg-dark) !important;
+	fill: var(--color-bg-dark) !important;
+	fill-opacity: 1 !important;
+	stroke-opacity: 1 !important;
+}
+
+/* Force marker opacity */
+.react-flow__marker {
+	opacity: 1 !important;
+}
+
+/* Force SVG elements to be fully opaque */
+.react-flow__edges svg {
+	opacity: 1 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.wikipd-tree-visualization {
+		height: 600px;
+	}
+
+	.node-label {
+		font-size: 12px;
+	}
+
+	.wikipd-flow-node {
+		padding: 8px 15px;
+		min-width: 100px;
+	}
+}
