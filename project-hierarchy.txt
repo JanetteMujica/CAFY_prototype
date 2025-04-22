@@ -3,8 +3,8 @@ CAFY_prototype
 ├─ dist
 │  ├─ assets
 │  │  ├─ CAFY_Online-CQmHrKPw.png
-│  │  ├─ index-D9Vn62So.css
-│  │  ├─ index-DEf1nU-c.js
+│  │  ├─ index-Czu5jVwW.js
+│  │  ├─ index-fXQ7DVmQ.css
 │  │  └─ watch-CTdS-nIS.png
 │  └─ index.html
 ├─ eslint.config.js
